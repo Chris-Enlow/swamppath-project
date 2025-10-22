@@ -3,12 +3,141 @@ import React, { useState, useEffect } from 'react';
 // --- Mock Data ---
 // In a real application, this would come from a database/API
 const mockCourses = {
-  'COP3502': { name: 'Programming Fundamentals 1', credits: 3, professor: 'Prof. Amanpreet Kapoor', rating: 4.5, schedule: [{ day: 'M', start: 3, end: 4 }, { day: 'W', start: 3, end: 4 }, { day: 'F', start: 3, end: 4 }] },
-  'MAC2311': { name: 'Calculus 1', credits: 4, professor: 'Prof. Darryl Jacobs', rating: 4.2, schedule: [{ day: 'T', start: 2, end: 3 }, { day: 'R', start: 2, end: 3 }] },
-  'ENC1101': { name: 'Expository and Argumentative Writing', credits: 3, professor: 'Prof. Amy Jung', rating: 4.8, schedule: [{ day: 'M', start: 5, end: 6 }, { day: 'W', start: 5, end: 6 }] },
-  'PHY2048': { name: 'Physics with Calculus 1', credits: 3, professor: 'Prof. Selman Hershfield', rating: 3.9, schedule: [{ day: 'T', start: 4, end: 5 }, { day: 'R', start: 4, end: 5 }] },
-  'CHM2045': { name: 'General Chemistry 1', credits: 3, professor: 'Prof. Melanie Veige', rating: 4.1, schedule: [{ day: 'M', start: 7, end: 8 }, { day: 'W', start: 7, end: 8 }] },
-  'ECO2013': { name: 'Principles of Macroeconomics', credits: 3, professor: 'Prof. Mark Rush', rating: 4.6, schedule: [{ day: 'F', start: 5, end: 6 }] },
+  'COP3502': {
+    name: 'Programming Fundamentals 1',
+    credits: 3,
+    professor: 'Prof. Amanpreet Kapoor',
+    rating: 4.5,
+    sections: [
+      {
+        id: 3501,
+        times: [
+          { day: 'M', start: 3, end: 4 },
+          { day: 'W', start: 3, end: 4 },
+          { day: 'F', start: 3, end: 4 }
+        ]
+      },
+      {
+        id: 1,
+        times: [
+          { day: 'T', start: 5, end: 6 },
+          { day: 'R', start: 5, end: 6 }
+        ]
+      },
+      {
+        id: 2,
+        times: [
+          { day: 'T', start: 2, end: 3 },
+          { day: 'R', start: 2, end: 3 }
+        ]
+      },
+    ]
+  },
+  'MAC2311': {
+    name: 'Calculus 1',
+    credits: 4,
+    professor: 'Prof. Darryl Jacobs',
+    rating: 4.2,
+    sections: [
+      {
+        id: 0,
+        times: [
+          { day: 'T', start: 2, end: 3 },
+          { day: 'R', start: 2, end: 3 }
+        ]
+      },
+      {
+        id: 1,
+        times: [
+          { day: 'M', start: 1, end: 2 },
+          { day: 'W', start: 1, end: 2 },
+          { day: 'F', start: 1, end: 2 }
+        ]
+      },
+    ]
+  },
+  'ENC1101': {
+    name: 'Expository and Argumentative Writing',
+    credits: 3,
+    professor: 'Prof. Amy Jung',
+    rating: 4.8,
+    sections: [
+      {
+        id: 0,
+        times: [
+          { day: 'M', start: 5, end: 6 },
+          { day: 'W', start: 5, end: 6 }
+        ]
+      },
+      {
+        id: 1,
+        times: [
+          { day: 'T', start: 6, end: 7 },
+          { day: 'R', start: 6, end: 7 }
+        ]
+      },
+    ]
+  },
+  'PHY2048': {
+    name: 'Physics with Calculus 1',
+    credits: 3,
+    professor: 'Prof. Selman Hershfield',
+    rating: 3.9,
+    sections: [
+      {
+        id: 0,
+        times: [
+          { day: 'T', start: 4, end: 5 },
+          { day: 'R', start: 4, end: 5 }
+        ]
+      },
+    ]
+  },
+  'CHM2045': {
+    name: 'General Chemistry 1',
+    credits: 3,
+    professor: 'Prof. Melanie Veige',
+    rating: 4.1,
+    sections: [
+      {
+        id: 0,
+        times: [
+          { day: 'M', start: 7, end: 8 },
+          { day: 'W', start: 7, end: 8 }
+        ]
+      },
+    ]
+  },
+  'ECO2013': {
+    name: 'Principles of Macroeconomics',
+    credits: 3,
+    professor: 'Prof. Mark Rush',
+    rating: 4.6,
+    sections: [
+      {
+        id: 0,
+        times: [
+          { day: 'F', start: 5, end: 6 }
+        ]
+      },
+    ]
+  },
+  'COP3504': {
+    name: 'Same time course',
+    credits: 3,
+    professor: 'loserman',
+    rating: 4.5,
+    sections: [
+      {
+        id: 0,
+        times: [
+          { day: 'M', start: 3, end: 4 },
+          { day: 'W', start: 3, end: 4 },
+          { day: 'F', start: 3, end: 4 }
+        ]
+      },
+    ]
+  },
 };
 
 const catalogData = Object.entries(mockCourses).map(([id, data]) => ({ id, ...data }));
@@ -34,21 +163,40 @@ const ProfessorRating = ({ rating }) => {
 
 // --- Main Page Components ---
 
-const SchedulePage = ({ selectedCourses, onRemoveCourse }) => {
+const SchedulePage = ({ selectedCourses, displayedCourses, onRemoveCourse, onSelectSection }) => {
   const days = ['M', 'T', 'W', 'R', 'F'];
   const periods = ['8:30 AM', '9:35 AM', '10:40 AM', '11:45 AM', '12:50 PM', '1:55 PM', '3:00 PM', '4:05 PM'];
   const courseColors = ['course-blue', 'course-green', 'course-indigo', 'course-red', 'course-purple', 'course-yellow'];
 
-  const getCourseForSlot = (day, periodIndex) => {
-    const courseEntry = Object.entries(selectedCourses).find(([id, course]) =>
-      course.schedule.some(slot => slot.day === day && slot.start === periodIndex + 1)
-    );
-    if (courseEntry) {
-      const [id, course] = courseEntry;
-      const colorClass = courseColors[Object.keys(selectedCourses).indexOf(id) % courseColors.length];
-      return { id, ...course, colorClass };
-    }
-    return null;
+  const getCoursesForSlot = (day, periodIndex) => {
+    const courseEntries = Object.entries(displayedCourses).filter(([id, courseDisplay]) => {
+      if (!courseDisplay.selectedSection) return false;
+      const section = courseDisplay.selectedSection;
+      return section.times.some(time => time.day === day && time.start === periodIndex + 1);
+    });
+    return courseEntries.map(([id, courseDisplay]) => ({
+      id,
+      ...courseDisplay,
+      colorClass: courseColors[Object.keys(displayedCourses).indexOf(id) % courseColors.length]
+    }));
+  };
+
+  // Helper function to format section times for display
+  const formatSectionDisplay = (times) => {
+    const timeGroups = {};
+    times.forEach(time => {
+      const key = `${time.start}-${time.end}`;
+      if (!timeGroups[key]) {
+        timeGroups[key] = { days: [], start: time.start, end: time.end };
+      }
+      timeGroups[key].days.push(time.day);
+    });
+
+    return Object.values(timeGroups).map(group => ({
+      days: group.days.join(' / '),
+      start: group.start,
+      end: group.end
+    }));
   };
 
   const totalCredits = Object.values(selectedCourses).reduce((sum, course) => sum + course.credits, 0);
@@ -64,15 +212,27 @@ const SchedulePage = ({ selectedCourses, onRemoveCourse }) => {
             <React.Fragment key={period}>
               <div className="time-slot">{period}</div>
               {days.map(day => {
-                const course = getCourseForSlot(day, periodIndex);
+                const courses = getCoursesForSlot(day, periodIndex);
+                const hasConflict = courses.length > 1;
                 return (
-                  <div key={`${day}-${period}`} className={`calendar-cell ${course ? course.colorClass : ''}`}>
-                    {course && (
-                      <div className="course-info">
-                        <strong>{course.id}</strong>
-                        <span>{course.name}</span>
-                      </div>
-                    )}
+                  <div
+                    key={`${day}-${period}`}
+                    className={`calendar-cell ${hasConflict ? 'has-conflict' : ''}`}
+                  >
+                    {/* lay out items side-by-side when conflicting */}
+                    <div className={`cell-content ${hasConflict ? 'conflict-grid' : ''}`}>
+                      {courses.map((course) => (
+                        <div
+                          key={course.id}
+                          className={`course-chip ${course.colorClass}`}
+                          title={`${course.id} — ${course.name}`}
+                        >
+                          <strong>{course.id}</strong>
+                          <span className="chip-name">{course.name}</span>
+                        </div>
+                      ))}
+                    </div>
+                    {hasConflict && <div className="conflict-warning" title="Time conflict">⚠️</div>}
                   </div>
                 );
               })}
@@ -82,28 +242,82 @@ const SchedulePage = ({ selectedCourses, onRemoveCourse }) => {
       </div>
 
       <div className="card courses-sidebar">
-        <h2 className="card-title">My Courses</h2>
+        <h2 className="card-title">Wanted Courses</h2>
         <p>Total Credits: <span className="credits-total">{totalCredits}</span></p>
         <div className="selected-courses-list">
           {Object.keys(selectedCourses).length === 0 ? (
-            <p className="placeholder-text">No courses added yet.</p>
+            <div className="placeholder-text">
+              <p>No courses added yet.</p>
+              <p>Go to the Catalog tab in the top right to add courses.</p>
+              <p>Once courses are added they will appear here.</p>
+            </div>
           ) : (
-            Object.entries(selectedCourses).map(([id, course]) => (
-              <div key={id} className="course-item">
-                <div className="course-item-header">
-                  <div>
-                    <h3>{id}</h3>
-                    <p>{course.name}</p>
-                    <small>{course.credits} Credits</small>
+            Object.entries(selectedCourses)
+              .sort(([idA], [idB]) => idA.localeCompare(idB))
+              .map(([id, course]) => {
+                const selectedSectionId = displayedCourses[id]?.sectionId;
+
+                // Sort sections by first time slot
+                const sortedSections = [...course.sections].sort((a, b) => {
+                  const daysOrder = { 'M': 0, 'T': 1, 'W': 2, 'R': 3, 'F': 4 };
+                  const aFirstDay = a.times[0]?.day || 'Z';
+                  const bFirstDay = b.times[0]?.day || 'Z';
+
+                  if (daysOrder[aFirstDay] !== daysOrder[bFirstDay]) {
+                    return daysOrder[aFirstDay] - daysOrder[bFirstDay];
+                  }
+                  return (a.times[0]?.start || 0) - (b.times[0]?.start || 0);
+                });
+
+                return (
+                  <div key={id} className="course-item">
+                    <div className="course-item-header">
+                      <div className="course-info-line">
+                        <h3>{id}</h3>
+                        <span className="separator">•</span>
+                        <p>{course.name}</p>
+                        <span className="separator">•</span>
+                        <small>{course.credits} Credits</small>
+                      </div>
+                      <button onClick={() => onRemoveCourse(id)} className="remove-btn">&times;</button>
+                    </div>
+                    <div className="course-item-body">
+                      <p className="section-label">Select a time slot:</p>
+                      <div className="section-options">
+                        {sortedSections.map((section) => {
+                          const isSelected = selectedSectionId === section.id;
+                          const periodLabels = ['8:30 AM', '9:35 AM', '10:40 AM', '11:45 AM', '12:50 PM', '1:55 PM', '3:00 PM', '4:05 PM'];
+                          const formattedTimes = formatSectionDisplay(section.times);
+
+                          return (
+                            <button
+                              key={section.id}
+                              onClick={() => onSelectSection(id, section.id)}
+                              className={`section-btn ${isSelected ? 'selected' : ''}`}
+                            >
+                              <div className="section-time-display">
+                                {formattedTimes.map((timeGroup, idx) => (
+                                  <div key={idx} className="time-group">
+                                    <span className="section-days">{timeGroup.days}</span>
+                                    <span className="section-time">{periodLabels[timeGroup.start - 1]}</span>
+                                    <span className="section-num">ID: {section.id}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                    <div className="course-item-footer">
+                      <div>
+                        <p>{course.professor}</p>
+                        <ProfessorRating rating={course.rating} />
+                      </div>
+                    </div>
                   </div>
-                  <button onClick={() => onRemoveCourse(id)} className="remove-btn">&times;</button>
-                </div>
-                <div className="course-item-footer">
-                  <p>{course.professor}</p>
-                  <ProfessorRating rating={course.rating} />
-                </div>
-              </div>
-            ))
+                );
+              })
           )}
         </div>
       </div>
@@ -111,7 +325,7 @@ const SchedulePage = ({ selectedCourses, onRemoveCourse }) => {
   );
 };
 
-const CatalogPage = ({ onAddCourse, selectedCourses }) => {
+const CatalogPage = ({ onAddCourse, onRemoveCourse, selectedCourses }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredCourses, setFilteredCourses] = useState(catalogData);
 
@@ -125,17 +339,22 @@ const CatalogPage = ({ onAddCourse, selectedCourses }) => {
     setFilteredCourses(results);
   }, [searchTerm]);
 
-  const checkConflict = (newCourse) => {
-    for (const selectedCourse of Object.values(selectedCourses)) {
-      for (const newSlot of newCourse.schedule) {
-        for (const selectedSlot of selectedCourse.schedule) {
-          if (newSlot.day === selectedSlot.day && newSlot.start === selectedSlot.start) {
-            return true;
-          }
-        }
+  // Helper function to format section times for display
+  const formatSectionDisplay = (times) => {
+    const timeGroups = {};
+    times.forEach(time => {
+      const key = `${time.start}-${time.end}`;
+      if (!timeGroups[key]) {
+        timeGroups[key] = { days: [], start: time.start, end: time.end };
       }
-    }
-    return false;
+      timeGroups[key].days.push(time.day);
+    });
+
+    return Object.values(timeGroups).map(group => ({
+      days: group.days.join(' / '),
+      start: group.start,
+      end: group.end
+    }));
   };
 
   return (
@@ -151,24 +370,49 @@ const CatalogPage = ({ onAddCourse, selectedCourses }) => {
       <div className="catalog-grid">
         {filteredCourses.map(course => {
           const isSelected = !!selectedCourses[course.id];
-          const hasConflict = !isSelected && checkConflict(course);
           return (
-            <div key={course.id} className={`card course-card ${isSelected ? 'selected' : ''} ${hasConflict ? 'conflict' : ''}`}>
+            <div key={course.id} className={`card course-card ${isSelected ? 'selected' : ''}`}>
               <div className="course-card-header">
                 <h3>{course.id}</h3>
                 <span>{course.credits} Credits</span>
               </div>
               <p>{course.name}</p>
               <small>{course.professor}</small>
+              <div className="course-sections-preview">
+                {course.sections.map((section) => {
+                  const periodLabels = ['8:30 AM', '9:35 AM', '10:40 AM', '11:45 AM', '12:50 PM', '1:55 PM', '3:00 PM', '4:05 PM'];
+                  const formattedTimes = formatSectionDisplay(section.times);
+
+                  return (
+                    <div key={section.id} className="section-preview">
+                      {formattedTimes.map((timeGroup, idx) => (
+                        <React.Fragment key={idx}>
+                          <span>{timeGroup.days}</span>
+                          <span>{periodLabels[timeGroup.start - 1]}</span>
+                          <span className="section-num">Couse ID: {section.id}</span>
+                        </React.Fragment>
+                      ))}
+                    </div>
+                  );
+                })}
+              </div>
               <div className="course-card-footer">
                 <ProfessorRating rating={course.rating} />
-                <button
-                  onClick={() => onAddCourse(course.id)}
-                  disabled={isSelected || hasConflict}
-                  className="add-btn"
-                >
-                  {isSelected ? 'Added' : hasConflict ? 'Conflict' : 'Add'}
-                </button>
+                {isSelected ? (
+                  <button
+                    onClick={() => onRemoveCourse(course.id)}
+                    className="remove-catalog-btn"
+                  >
+                    Remove
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => onAddCourse(course.id)}
+                    className="add-btn"
+                  >
+                    Add
+                  </button>
+                )}
               </div>
             </div>
           );
@@ -184,15 +428,15 @@ const ProfilePage = () => {
       <div className="card profile-card">
         <h2 className="card-title">Profile</h2>
         <div className="profile-info">
-            <div className="profile-avatar">👤</div>
-            <h3>Albert Gator</h3>
-            <p>Computer Science Major</p>
+          <div className="profile-avatar">👤</div>
+          <h3>Albert Gator</h3>
+          <p>Computer Science Major</p>
         </div>
         <div className="profile-details">
-            <div><span>Name</span><span>Albert Gator</span></div>
-            <div><span>Degree</span><span>B.S. in Computer Science</span></div>
-            <div><span>Credits</span><span>72</span></div>
-            <div><span>On Track</span><span className="on-track">✓ Yes</span></div>
+          <div><span>Name</span><span>Albert Gator</span></div>
+          <div><span>Degree</span><span>B.S. in Computer Science</span></div>
+          <div><span>Credits</span><span>72</span></div>
+          <div><span>On Track</span><span className="on-track">✓ Yes</span></div>
         </div>
       </div>
     </div>
@@ -207,6 +451,7 @@ export default function App() {
     'COP3502': mockCourses['COP3502'],
     'MAC2311': mockCourses['MAC2311'],
   });
+  const [displayedCourses, setDisplayedCourses] = useState({});
 
   const addCourse = (courseId) => {
     if (mockCourses[courseId]) {
@@ -220,14 +465,57 @@ export default function App() {
       delete newCourses[courseId];
       return newCourses;
     });
+    // Also remove from displayed courses if it was showing
+    setDisplayedCourses(prev => {
+      const newDisplayed = { ...prev };
+      delete newDisplayed[courseId];
+      return newDisplayed;
+    });
+  };
+
+  const selectSection = (courseId, sectionId) => {
+    setDisplayedCourses(prev => {
+      if (prev[courseId]?.sectionId === sectionId) {
+        // Deselect if clicking the same section
+        const newCourses = { ...prev };
+        delete newCourses[courseId];
+        return newCourses;
+      } else {
+        // Select new section
+        const course = selectedCourses[courseId];
+        const section = course.sections.find(s => s.id === sectionId);
+        return {
+          ...prev,
+          [courseId]: {
+            ...course,
+            sectionId,
+            selectedSection: section
+          }
+        };
+      }
+    });
   };
 
   const renderPage = () => {
     switch (page) {
-      case 'schedule': return <SchedulePage selectedCourses={selectedCourses} onRemoveCourse={removeCourse} />;
-      case 'catalog': return <CatalogPage onAddCourse={addCourse} selectedCourses={selectedCourses} />;
+      case 'schedule': return (
+        <SchedulePage
+          selectedCourses={selectedCourses}
+          displayedCourses={displayedCourses}
+          onRemoveCourse={removeCourse}
+          onSelectSection={selectSection}
+        />
+      );
+      case 'catalog': return <CatalogPage onAddCourse={addCourse} onRemoveCourse={removeCourse} selectedCourses={selectedCourses} />;
       case 'profile': return <ProfilePage />;
-      default: return <SchedulePage selectedCourses={selectedCourses} onRemoveCourse={removeCourse} />;
+      default: return (
+        <SchedulePage
+          selectedCourses={selectedCourses}
+          displayedCourses={displayedCourses}
+          onRemoveCourse={removeCourse}
+          onSelectSection={selectSection}
+        />
+      );
     }
   };
 
@@ -242,7 +530,7 @@ export default function App() {
 
   return (
     <div id="app-root">
-       <style>{`
+      <style>{`
         /* --- Global Styles --- */
         :root {
           --primary-color: #00529b; /* UF Blue */
@@ -285,7 +573,7 @@ export default function App() {
         }
 
         .page-container {
-          max-width: 1200px;
+          max-width: 1400px;
           margin: 0 auto;
           padding: 2rem;
         }
@@ -378,6 +666,26 @@ export default function App() {
           display: flex;
           flex-direction: column;
           gap: 2rem;
+          height: calc(100vh - 4rem - 4rem); /* viewport height minus header and padding */
+        }
+
+        .schedule-calendar {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          min-height: 0;
+        }
+
+        .schedule-calendar .calendar-grid {
+          flex: 1;
+          overflow-y: auto;
+        }
+
+        .courses-sidebar {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          min-height: 0;
         }
 
         .calendar-grid {
@@ -402,6 +710,11 @@ export default function App() {
           transition: background-color 0.2s;
           padding: 4px;
           overflow: hidden;
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          gap: 2px;
         }
         .course-info {
           font-size: 0.75rem;
@@ -422,50 +735,46 @@ export default function App() {
         .course-purple { background-color: #e9d5ff; }
         .course-yellow { background-color: #fef08a; }
 
-        .courses-sidebar .credits-total {
-            color: var(--primary-color);
-            font-weight: bold;
+        .courses-sidebar {
+          display: flex;
+          flex-direction: column;
+          max-height: 85vh;
         }
+
+        .courses-sidebar .card-title {
+          margin-bottom: 0.5rem;
+        }
+
+        .courses-sidebar > p {
+          margin-bottom: 0.5rem;
+        }
+
         .selected-courses-list {
-            margin-top: 1rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+          margin-top: 0.5rem;
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+          overflow-y: auto;
+          padding-right: 0.5rem;
+          flex: 1;
         }
-        .course-item {
-            background-color: var(--light-gray);
-            padding: 1rem;
-            border-radius: 8px;
-            border: 1px solid var(--medium-gray);
+
+        .selected-courses-list::-webkit-scrollbar {
+          width: 8px;
         }
-        .course-item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
+
+        .selected-courses-list::-webkit-scrollbar-track {
+          background: var(--light-gray);
+          border-radius: 4px;
         }
-        .course-item-header h3 { margin: 0; }
-        .course-item-header p, .course-item-header small { margin: 0; color: var(--dark-gray); }
-        .remove-btn {
-            border: none;
-            background: none;
-            color: #ef4444; /* red-500 */
-            font-size: 1.5rem;
-            font-weight: bold;
-            cursor: pointer;
-            padding: 0;
-            line-height: 1;
+
+        .selected-courses-list::-webkit-scrollbar-thumb {
+          background: var(--medium-gray);
+          border-radius: 4px;
         }
-        .course-item-footer {
-            margin-top: 0.5rem;
-            padding-top: 0.5rem;
-            border-top: 1px solid var(--medium-gray);
-            font-size: 0.8rem;
-            color: var(--dark-gray);
-        }
-        .placeholder-text {
-            text-align: center;
-            padding: 2rem 0;
-            color: var(--dark-gray);
+
+        .selected-courses-list::-webkit-scrollbar-thumb:hover {
+          background: var(--dark-gray);
         }
 
         /* --- Catalog Page --- */
@@ -495,7 +804,7 @@ export default function App() {
         .course-card.selected {
             border-color: var(--primary-color);
         }
-        .course-card.conflict {
+        .course-card.has-conflict {
             opacity: 0.6;
             background-color: var(--light-gray);
         }
@@ -532,9 +841,282 @@ export default function App() {
             background-color: var(--dark-gray);
             cursor: not-allowed;
         }
-        .course-card.conflict .add-btn {
+        .course-card.has-conflict .add-btn {
             background-color: #dc2626; /* red-600 */
         }
+
+        .remove-btn {
+          border: none;
+          background: none;
+          color: var(--secondary-color);
+          font-size: 1.25rem;
+          font-weight: bold;
+          cursor: pointer;
+          padding: 0;
+          line-height: 1;
+          transition: color 0.2s;
+        }
+
+        .remove-btn:hover {
+          color: #e03d12;
+        }
+
+        .course-item {
+        background-color: var(--light-gray);
+        padding: 0.5rem;
+        border-radius: 8px;
+        border: 1px solid var(--medium-gray);
+      }
+
+      .course-item-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .course-info-line {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex: 1;
+        min-width: 0;
+      }
+
+      .course-info-line h3 { 
+        margin: 0;
+        font-size: 1rem;
+        flex-shrink: 0;
+      }
+
+      .course-info-line p {
+        margin: 0;
+        color: var(--dark-gray);
+        font-size: 0.8rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        flex: 1;
+        min-width: 0;
+      }
+
+      .course-info-line small { 
+        margin: 0; 
+        color: var(--dark-gray);
+        font-size: 0.75rem;
+        flex-shrink: 0;
+      }
+
+      .separator {
+        color: var(--medium-gray);
+        font-size: 0.8rem;
+        flex-shrink: 0;
+      }
+
+      .course-item-body {
+        margin: 0.35rem 0;
+      }
+
+      .section-label {
+        font-size: 0.7rem;
+        color: var(--dark-gray);
+        margin: 0 0 0.25rem 0;
+        font-weight: 500;
+      }
+
+      .section-options {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .section-btn {
+        display: inline-flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 0.35rem 0.5rem;
+        background-color: var(--primary-color);
+        border: 2px solid var(--primary-color);
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: inherit;
+        color: white;
+        font-weight: 500;
+        width: auto;
+      }
+
+      .section-btn:hover {
+        background-color: #003e7b;
+        border-color: #003e7b;
+      }
+
+      .section-btn.selected {
+        background-color: var(--secondary-color);
+        border-color: var(--secondary-color);
+      }
+
+      .section-btn.selected:hover {
+        background-color: #e03d12;
+        border-color: #e03d12;
+      }
+
+      .section-time-display {
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem;
+        align-items: center;
+        white-space: nowrap;
+      }
+
+      .time-group {
+        display: flex;
+        gap: 0.35rem;
+        align-items: center;
+      }
+
+      .section-days {
+        font-weight: bold;
+        font-size: 0.75rem;
+      }
+
+      .section-time {
+        font-size: 0.75rem;
+      }
+
+      .remove-btn {
+        border: none;
+        background: none;
+        color: var(--secondary-color);
+        font-size: 1.25rem;
+        font-weight: bold;
+        cursor: pointer;
+        padding: 0;
+        line-height: 1;
+        transition: color 0.2s;
+      }
+
+      .remove-btn:hover {
+        color: #e03d12;
+      }
+
+      .course-item-footer {
+        margin-top: 0.35rem;
+        padding-top: 0.35rem;
+        border-top: 1px solid var(--medium-gray);
+        font-size: 0.7rem;
+        color: var(--dark-gray);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .course-item-footer p {
+        margin: 0;
+        font-size: 0.7rem;
+      }
+
+      .placeholder-text {
+        text-align: center;
+        padding: 2rem 1rem;
+        color: var(--dark-gray);
+      }
+
+      .placeholder-text p {
+        margin: 0.75rem 0;
+        line-height: 1.5;
+      }
+
+      .placeholder-text p:first-child {
+        font-weight: 600;
+        font-size: 1rem;
+        color: var(--text-color);
+      }
+
+      .credits-total {
+        color: var(--primary-color);
+        font-weight: bold;
+      }
+
+      .calendar-cell.has-conflict {
+        border: 1px solid #fecaca; /* light red border */
+        background-color: #fff7f7; /* very light red bg */
+      }
+
+      .conflict-item {
+        /* keep items readable */
+        opacity: 1;
+      }
+
+      .conflict-warning {
+        position: absolute;
+        top: 2px;
+        right: 4px;
+        font-size: 12px;
+        opacity: 0.9;
+      }
+
+      /* Weekly schedule: improve overlapping item layout */
+      .calendar-cell {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 2px;
+      }
+
+      .cell-content {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .conflict-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+        align-items: stretch;
+        gap: 4px;
+        height: 100%;
+      }
+
+      .course-chip {
+        padding: 4px;
+        border-radius: 6px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-width: 0;
+        overflow: hidden;
+      }
+      .course-chip strong {
+        font-size: 0.75rem;
+        line-height: 1;
+      }
+      .chip-name {
+        font-size: 0.7rem;
+        line-height: 1.1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        opacity: 0.9;
+      }
+
+      /* soften conflict styling */
+      .calendar-cell.has-conflict {
+        border: 1px solid #fecaca;
+        background-color: #fff7f7;
+      }
+
+      .conflict-warning {
+        position: absolute;
+        top: 2px;
+        right: 4px;
+        font-size: 12px;
+        opacity: 0.9;
+      }
 
         /* --- Profile Page --- */
         .profile-card {
@@ -578,25 +1160,156 @@ export default function App() {
 
         /* --- Responsive Adjustments --- */
         @media (min-width: 768px) {
-            .schedule-page-container {
-                flex-direction: row;
-                align-items: flex-start;
-            }
-            .schedule-calendar {
-                flex-grow: 1;
-            }
-            .courses-sidebar {
-                width: 320px;
-                flex-shrink: 0;
-            }
-            .course-info span {
-                display: inline; /* Show full course name on larger screens */
-            }
+          .schedule-page-container {
+              flex-direction: row;
+              align-items: stretch;
+              height: calc(100vh - 4rem - 4rem);
+              justify-content: center;
+              gap: 2rem;
+          }
+          .schedule-calendar {
+              flex: 2;
+              min-width: 0;
+              max-width: 1000px;
+          }
+          .courses-sidebar {
+              width: 350px;
+              flex-shrink: 0;
+          }
+          .course-info span {
+              display: inline; /* Show full course name on larger screens */
+          }
         }
-      `}</style>
+
+        .course-sections-preview {
+        margin: 0.5rem 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
+      .section-preview {
+        display: grid;
+        grid-template-columns: 110px auto auto;
+        gap: 0.5rem;
+        padding: 0.25rem 0.5rem;
+        background-color: var(--light-gray);
+        border-radius: 4px;
+        font-size: 0.75rem;
+        color: var(--dark-gray);
+        align-items: center;
+      }
+
+      .section-preview span:nth-child(1) {
+        font-weight: 700;
+        color: var(--primary-color);
+        text-align: left;
+      }
+
+      .section-preview span:nth-child(2) {
+        font-weight: 600;
+        text-align: left;
+      }
+
+      .section-preview span:nth-child(3) {
+        text-align: left;
+      }
+
+      .remove-catalog-btn {
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        color: white;
+        background-color: var(--secondary-color);
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .remove-catalog-btn:hover {
+        background-color: #e03d12;
+      }
+
+      .conflict-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 4px;
+      }
+
+      .course-chip {
+        position: relative;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        display: flex;
+        color: white;
+        font-size: 0.75rem;
+        border-radius: 4px;
+        padding: 0.5rem;
+      }
+
+      .conflict-warning {
+        color: #dc2626; /* red-600 */
+        font-size: 0.875rem;
+        right: 4px;
+        top: 4px;
+        position: absolute;
+      }
+
+      .calendar-cell.has-conflict .course-chip {
+        opacity: 0.7;
+      }
+
+      .chip-name {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        text-align: center;
+        font-size: 0.65rem;
+      }
+
+      .course-chip strong {
+        margin-bottom: 2px;
+        font-weight: 600;
+      }
+
+      /* High-contrast readable chips in Weekly Schedule */
+  .course-info,
+  .course-chip {
+    color: #ffffff;                 /* white text for contrast */
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 6px;
+    padding: 2px 6px;
+    font-weight: 600;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.25); /* improve readability on dark bg */
+  }
+
+  /* Darker, higher-contrast palettes (override previous) */
+  .course-blue   { background-color: #1e3a8a; border-color: #1d4ed8; } /* blue-800 bg, blue-600 border */
+  .course-green  { background-color: #166534; border-color: #15803d; } /* green-800 bg, green-600 border */
+  .course-indigo { background-color: #3730a3; border-color: #4f46e5; } /* indigo-800 bg, indigo-600 border */
+  .course-red    { background-color: #991b1b; border-color: #dc2626; } /* red-800 bg, red-600 border */
+  .course-purple { background-color: #6b21a8; border-color: #9333ea; } /* purple-800 bg, purple-500 border */
+  .course-yellow { background-color: #92400e; border-color: #d97706; } /* amber-800 bg, amber-600 border */
+
+  /* Keep chips readable when there is a conflict */
+  .calendar-cell.has-conflict .course-info,
+  .calendar-cell.has-conflict .course-chip {
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.15);
+  }
+
+  /* Truncate long names inside chips */
+  .course-info span,
+  .chip-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+        `}</style>
       <header className="app-header">
         <nav className="main-nav">
-          <h1 className="logo">SwampPath</h1>
+          <div className="logo">SwampPath</div>
           <div className="nav-links">
             <NavLink pageName="schedule">Schedule</NavLink>
             <NavLink pageName="catalog">Catalog</NavLink>
