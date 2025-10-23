@@ -219,7 +219,6 @@ const SchedulePage = ({ selectedCourses, displayedCourses, onRemoveCourse, onSel
                     key={`${day}-${period}`}
                     className={`calendar-cell ${hasConflict ? 'has-conflict' : ''}`}
                   >
-                    {/* lay out items side-by-side when conflicting */}
                     <div className={`cell-content ${hasConflict ? 'conflict-grid' : ''}`}>
                       {courses.map((course) => (
                         <div
@@ -244,6 +243,7 @@ const SchedulePage = ({ selectedCourses, displayedCourses, onRemoveCourse, onSel
       <div className="card courses-sidebar">
         <h2 className="card-title">Wanted Courses</h2>
         <p>Total Credits: <span className="credits-total">{totalCredits}</span></p>
+        {totalCredits > 18 && <p style={{ color: 'red' }}>Warning: You have exceeded the credit limit of 18 credits!</p>}
         <div className="selected-courses-list">
           {Object.keys(selectedCourses).length === 0 ? (
             <div className="placeholder-text">
@@ -357,9 +357,15 @@ const CatalogPage = ({ onAddCourse, onRemoveCourse, selectedCourses }) => {
     }));
   };
 
+  const totalSelectedCredits = Object.values(selectedCourses).reduce((sum, c) => sum + c.credits, 0);
+
   return (
     <div className="page-container">
       <h2 className="page-title">Course Catalog</h2>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <p>Selected Credits: <span className="credits-total">{totalSelectedCredits}</span></p>
+        {totalSelectedCredits > 18 && <p style={{ color: 'red', margin: 0 }}>Warning: You have exceeded the credit limit of 18 credits!</p>}
+      </div>
       <input
         type="text"
         placeholder="Search by course name, code, or professor..."
