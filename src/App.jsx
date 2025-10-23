@@ -443,14 +443,53 @@ const ProfilePage = () => {
   );
 };
 
+const HomePage = () => {
+  return (
+    <div className="page-container">
+      <div className="home-hero">
+        <h1 className="home-title">Welcome to SwampPath</h1>
+        <p className="home-subtitle">Your intelligent course scheduling assistant for UF students</p>
+      </div>
+
+      <div className="home-features">
+        <div className="card feature-card">
+          <div className="feature-icon">📅</div>
+          <h3>Smart Scheduling</h3>
+          <p>Build your perfect class schedule with our intuitive weekly calendar view</p>
+        </div>
+
+        <div className="card feature-card">
+          <div className="feature-icon">📚</div>
+          <h3>Course Catalog</h3>
+          <p>Browse and search through available courses with professor ratings</p>
+        </div>
+
+        <div className="card feature-card">
+          <div className="feature-icon">⚡</div>
+          <h3>Conflict Detection</h3>
+          <p>Automatically detect and highlight scheduling conflicts</p>
+        </div>
+
+        <div className="card feature-card">
+          <div className="feature-icon">🎯</div>
+          <h3>Track Progress</h3>
+          <p>Monitor your credit hours and stay on track for graduation</p>
+        </div>
+      </div>
+
+      <div className="card home-cta">
+        <h2>Get Started</h2>
+        <p>Ready to build your schedule? Head to the Catalog to add courses, then view your Schedule to select time slots.</p>
+      </div>
+    </div>
+  );
+};
+
 // --- App Component (Main) ---
 
 export default function App() {
-  const [page, setPage] = useState('schedule');
-  const [selectedCourses, setSelectedCourses] = useState({
-    'COP3502': mockCourses['COP3502'],
-    'MAC2311': mockCourses['MAC2311'],
-  });
+  const [page, setPage] = useState('home');
+  const [selectedCourses, setSelectedCourses] = useState({});
   const [displayedCourses, setDisplayedCourses] = useState({});
 
   const addCourse = (courseId) => {
@@ -498,6 +537,7 @@ export default function App() {
 
   const renderPage = () => {
     switch (page) {
+      case 'home': return <HomePage />;
       case 'schedule': return (
         <SchedulePage
           selectedCourses={selectedCourses}
@@ -508,14 +548,7 @@ export default function App() {
       );
       case 'catalog': return <CatalogPage onAddCourse={addCourse} onRemoveCourse={removeCourse} selectedCourses={selectedCourses} />;
       case 'profile': return <ProfilePage />;
-      default: return (
-        <SchedulePage
-          selectedCourses={selectedCourses}
-          displayedCourses={displayedCourses}
-          onRemoveCourse={removeCourse}
-          onSelectSection={selectSection}
-        />
-      );
+      default: return <HomePage />;
     }
   };
 
@@ -1158,6 +1191,79 @@ export default function App() {
             font-weight: bold;
         }
 
+        /* --- Home Page --- */
+        .home-hero {
+          text-align: center;
+          padding: 3rem 1rem;
+          margin-bottom: 3rem;
+        }
+
+        .home-title {
+          font-size: 3rem;
+          font-weight: bold;
+          color: var(--primary-color);
+          margin: 0 0 1rem 0;
+        }
+
+        .home-subtitle {
+          font-size: 1.25rem;
+          color: var(--dark-gray);
+          margin: 0;
+        }
+
+        .home-features {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 1.5rem;
+          margin-bottom: 3rem;
+        }
+
+        .feature-card {
+          text-align: center;
+          padding: 2rem 1.5rem;
+          transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .feature-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        .feature-icon {
+          font-size: 3rem;
+          margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+          font-size: 1.25rem;
+          margin: 0 0 0.5rem 0;
+          color: var(--primary-color);
+        }
+
+        .feature-card p {
+          margin: 0;
+          color: var(--dark-gray);
+          line-height: 1.6;
+        }
+
+        .home-cta {
+          text-align: center;
+          padding: 2rem;
+          background: linear-gradient(135deg, var(--primary-color) 0%, #003e7b 100%);
+          color: white;
+        }
+
+        .home-cta h2 {
+          margin: 0 0 1rem 0;
+          font-size: 1.75rem;
+        }
+
+        .home-cta p {
+          margin: 0;
+          font-size: 1.1rem;
+          opacity: 0.95;
+        }
+
         /* --- Responsive Adjustments --- */
         @media (min-width: 768px) {
           .schedule-page-container {
@@ -1311,6 +1417,7 @@ export default function App() {
         <nav className="main-nav">
           <div className="logo">SwampPath</div>
           <div className="nav-links">
+            <NavLink pageName="home">Home</NavLink>
             <NavLink pageName="schedule">Schedule</NavLink>
             <NavLink pageName="catalog">Catalog</NavLink>
             <NavLink pageName="profile">Profile</NavLink>
