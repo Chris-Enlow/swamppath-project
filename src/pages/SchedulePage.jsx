@@ -3,10 +3,7 @@ import ProfessorRating from '../components/ProfessorRating';
 
 const SchedulePage = ({ selectedCourses, displayedCourses, onRemoveCourse, onSelectSection }) => {
     const days = ['M', 'T', 'W', 'R', 'F'];
-    const periods = [
-        '8:30 AM', '9:35 AM', '10:40 AM', '11:45 AM', '12:50 PM', '1:55 PM', '3:00 PM', '4:05 PM',
-        '5:10 PM', '6:15 PM'
-    ];
+    const periods = ['8:30 AM', '9:35 AM', '10:40 AM', '11:45 AM', '12:50 PM', '1:55 PM', '3:00 PM', '4:05 PM'];
     const courseColors = ['course-blue', 'course-green', 'course-indigo', 'course-red', 'course-purple', 'course-yellow'];
 
     const getCoursesForSlot = (day, periodIndex) => {
@@ -86,74 +83,33 @@ const SchedulePage = ({ selectedCourses, displayedCourses, onRemoveCourse, onSel
     };
 
     return (
-        <div
-            className="page-container schedule-page-container"
-            style={{
-                padding: '0.5rem',
-                display: 'flex',
-                flexDirection: 'row',
-                gap: '0.5rem',
-                alignItems: 'flex-start',
-                minHeight: '100vh',
-                boxSizing: 'border-box'
-            }}
-        >
-            <div
-                className="card schedule-calendar"
-                style={{
-                    flex: 2,
-                    minWidth: 0,
-                    padding: '0.5rem',
-                    fontSize: '0.92rem'
-                }}
-            >
-                <h2 className="card-title" style={{ fontSize: '1.1rem', margin: '0.5rem 0' }}>Weekly Schedule</h2>
-                <div
-                    className="calendar-grid"
-                    style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(6, 1fr)',
-                        gridAutoRows: 'minmax(1.2rem, auto)',
-                        gap: '2px'
-                    }}
-                >
-                    <div className="grid-header" style={{ fontSize: '0.95em', padding: '0.2em 0' }}>Time</div>
-                    {days.map(day => <div key={day} className="grid-header" style={{ fontSize: '0.95em', padding: '0.2em 0' }}>{day}</div>)}
+        <div className="page-container schedule-page-container">
+            <div className="card schedule-calendar">
+                <h2 className="card-title">Weekly Schedule</h2>
+                <div className="calendar-grid">
+                    <div className="grid-header">Time</div>
+                    {days.map(day => <div key={day} className="grid-header">{day}</div>)}
                     {periods.map((period, periodIndex) => (
                         <React.Fragment key={period}>
-                            <div className="time-slot" style={{ fontSize: '0.92em', padding: '0.1em 0' }}>{period}</div>
+                            <div className="time-slot">{period}</div>
                             {days.map(day => {
                                 const courses = getCoursesForSlot(day, periodIndex);
                                 const hasConflict = courses.length > 1;
                                 return (
-                                    <div
-                                        key={`${day}-${period}`}
-                                        className={`calendar-cell ${hasConflict ? 'has-conflict' : ''}`}
-                                        style={{
-                                            minHeight: '1.5em',
-                                            padding: '0.1em',
-                                            fontSize: '0.92em'
-                                        }}
-                                    >
+                                    <div key={`${day}-${period}`} className={`calendar-cell ${hasConflict ? 'has-conflict' : ''}`}>
                                         <div className={`cell-content ${hasConflict ? 'conflict-grid' : ''}`}>
                                             {courses.map((course) => (
                                                 <div
                                                     key={course.id}
                                                     className={`course-chip ${course.colorClass} ${!hasConflict ? 'fill-cell' : ''}`}
                                                     title={`${course.id} — ${course.name}`}
-                                                    style={{
-                                                        fontSize: '0.9em',
-                                                        padding: '0.1em 0.2em',
-                                                        margin: '0 0.05em 0.05em 0',
-                                                        minWidth: 0
-                                                    }}
                                                 >
                                                     <strong>{course.id}</strong>
-                                                    <span className="chip-name" style={{ marginLeft: 2 }}>{course.name}</span>
+                                                    <span className="chip-name">{course.name}</span>
                                                 </div>
                                             ))}
                                         </div>
-                                        {hasConflict && <div className="conflict-warning" title="Time conflict" style={{ fontSize: '1em' }}>⚠️</div>}
+                                        {hasConflict && <div className="conflict-warning" title="Time conflict">⚠️</div>}
                                     </div>
                                 );
                             })}
@@ -162,19 +118,11 @@ const SchedulePage = ({ selectedCourses, displayedCourses, onRemoveCourse, onSel
                 </div>
             </div>
 
-            <div
-                className="card courses-sidebar"
-                style={{
-                    flex: 1,
-                    minWidth: 0,
-                    padding: '0.5rem',
-                    fontSize: '0.92rem'
-                }}
-            >
-                <h2 className="card-title" style={{ fontSize: '1.1rem', margin: '0.5rem 0' }}>Wanted Courses</h2>
-                <p style={{ margin: '0.2em 0' }}>Total Credits: <span className="credits-total">{totalCredits}</span></p>
-                {totalCredits > 18 && <p style={{ color: 'red', margin: '0.2em 0' }}>Warning: You have exceeded the credit limit of 18 credits!</p>}
-                <div className="selected-courses-list" style={{ gap: '0.3em' }}>
+            <div className="card courses-sidebar">
+                <h2 className="card-title">Wanted Courses</h2>
+                <p>Total Credits: <span className="credits-total">{totalCredits}</span></p>
+                {totalCredits > 18 && <p style={{ color: 'red' }}>Warning: You have exceeded the credit limit of 18 credits!</p>}
+                <div className="selected-courses-list">
                     {Object.keys(selectedCourses).length === 0 ? (
                         <div className="placeholder-text">
                             <p>No courses added yet.</p>
@@ -194,10 +142,7 @@ const SchedulePage = ({ selectedCourses, displayedCourses, onRemoveCourse, onSel
                                     return (a.times[0]?.start || 0) - (b.times[0]?.start || 0);
                                 });
 
-                                const periodLabels = [
-                                    '8:30 AM', '9:35 AM', '10:40 AM', '11:45 AM', '12:50 PM', '1:55 PM', '3:00 PM', '4:05 PM',
-                                    '5:10 PM', '6:15 PM'
-                                ];
+                                const periodLabels = ['8:30 AM', '9:35 AM', '10:40 AM', '11:45 AM', '12:50 PM', '1:55 PM', '3:00 PM', '4:05 PM'];
 
                                 return (
                                     <div key={id} className="course-item">
