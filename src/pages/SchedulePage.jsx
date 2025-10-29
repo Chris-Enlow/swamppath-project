@@ -3,7 +3,7 @@ import ProfessorRating from '../components/ProfessorRating';
 
 const SchedulePage = ({ selectedCourses, displayedCourses, onRemoveCourse, onSelectSection }) => {
     const days = ['M', 'T', 'W', 'R', 'F'];
-    const periods = ['8:30 AM', '9:35 AM', '10:40 AM', '11:45 AM', '12:50 PM', '1:55 PM', '3:00 PM', '4:05 PM'];
+    const periods = ['8:30 AM', '9:35 AM', '10:40 AM', '11:45 AM', '12:50 PM', '1:55 PM', '3:00 PM', '4:05 PM', '5:10 PM', '6:15 PM'];
     const courseColors = ['course-blue', 'course-green', 'course-indigo', 'course-red', 'course-purple', 'course-yellow'];
 
     const getCoursesForSlot = (day, periodIndex) => {
@@ -83,10 +83,10 @@ const SchedulePage = ({ selectedCourses, displayedCourses, onRemoveCourse, onSel
     };
 
     return (
-        <div className="page-container schedule-page-container">
-            <div className="card schedule-calendar">
-                <h2 className="card-title">Weekly Schedule</h2>
-                <div className="calendar-grid">
+        <div className="page-container schedule-page-container" style={{ height: '100vh', overflow: 'hidden', display: 'flex', gap: '1rem', padding: '1rem', boxSizing: 'border-box' }}>
+            <div className="card schedule-calendar" style={{ flex: 2, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
+                <h2 className="card-title" style={{ margin: '0 0 0.5rem', fontSize: '1.2rem' }}>Weekly Schedule</h2>
+                <div className="calendar-grid" style={{ display: 'grid', gridTemplateColumns: 'auto repeat(5, 1fr)', gridTemplateRows: `auto repeat(${periods.length}, 1fr)`, gap: '1px', flex: 1, minHeight: 0 }}>
                     <div className="grid-header">Time</div>
                     {days.map(day => <div key={day} className="grid-header">{day}</div>)}
                     {periods.map((period, periodIndex) => (
@@ -118,11 +118,11 @@ const SchedulePage = ({ selectedCourses, displayedCourses, onRemoveCourse, onSel
                 </div>
             </div>
 
-            <div className="card courses-sidebar">
-                <h2 className="card-title">Wanted Courses</h2>
-                <p>Total Credits: <span className="credits-total">{totalCredits}</span></p>
-                {totalCredits > 18 && <p style={{ color: 'red' }}>Warning: You have exceeded the credit limit of 18 credits!</p>}
-                <div className="selected-courses-list">
+            <div className="card courses-sidebar" style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
+                <h2 className="card-title" style={{ margin: '0 0 0.5rem', fontSize: '1.2rem' }}>Wanted Courses</h2>
+                <p style={{ margin: '0.5rem 0' }}>Total Credits: <span className="credits-total">{totalCredits}</span></p>
+                {totalCredits > 18 && <p style={{ color: 'red', margin: '0.5rem 0' }}>Warning: You have exceeded the credit limit of 18 credits!</p>}
+                <div className="selected-courses-list" style={{ flex: 1, minHeight: 0, overflow: 'auto' }}>
                     {Object.keys(selectedCourses).length === 0 ? (
                         <div className="placeholder-text">
                             <p>No courses added yet.</p>
