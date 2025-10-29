@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ProfessorRating from '../components/ProfessorRating';
 
 const SchedulePage = ({ selectedCourses, displayedCourses, onRemoveCourse, onSelectSection }) => {
@@ -38,6 +38,50 @@ const SchedulePage = ({ selectedCourses, displayedCourses, onRemoveCourse, onSel
 
     const totalCredits = Object.values(selectedCourses).reduce((sum, course) => sum + course.credits, 0);
 
+    const timesOverlap = (a, b) => a.day === b.day && !(a.end <= b.start || a.start >= b.end);
+
+    const getConflicts = (courseId, section) => {
+        const conflicts = [];
+        Object.entries(displayedCourses).forEach(([otherId, other]) => {
+            if (otherId === courseId || !other?.selectedSection) return;
+            const overlaps = [];
+            section.times.forEach(t1 => {
+                other.selectedSection.times.forEach(t2 => {
+                    if (timesOverlap(t1, t2)) overlaps.push({ with: t2, target: t1 });
+                });
+            });
+            if (overlaps.length) {
+                conflicts.push({
+                    courseId: otherId,
+                    name: other.name,
+                    sectionId: other.sectionId,
+                    overlaps
+                });
+            }
+        });
+        return conflicts;
+    };
+
+    // Local modal state
+    const [conflictModal, setConflictModal] = useState({
+        open: false,
+        targetCourseId: null,
+        targetCourseName: null,
+        targetSection: null,
+        conflicts: []
+    });
+
+    // Helper to open conflict modal
+    const openConflictModal = (courseId, courseName, section, conflicts) => {
+        setConflictModal({
+            open: true,
+            targetCourseId: courseId,
+            targetCourseName: courseName,
+            targetSection: section,
+            conflicts
+        });
+    };
+
     return (
         <div className="page-container schedule-page-container">
             <div className="card schedule-calendar">
@@ -55,7 +99,11 @@ const SchedulePage = ({ selectedCourses, displayedCourses, onRemoveCourse, onSel
                                     <div key={`${day}-${period}`} className={`calendar-cell ${hasConflict ? 'has-conflict' : ''}`}>
                                         <div className={`cell-content ${hasConflict ? 'conflict-grid' : ''}`}>
                                             {courses.map((course) => (
-                                                <div key={course.id} className={`course-chip ${course.colorClass}`} title={`${course.id} — ${course.name}`}>
+                                                <div
+                                                    key={course.id}
+                                                    className={`course-chip ${course.colorClass} ${!hasConflict ? 'fill-cell' : ''}`}
+                                                    title={`${course.id} — ${course.name}`}
+                                                >
                                                     <strong>{course.id}</strong>
                                                     <span className="chip-name">{course.name}</span>
                                                 </div>
@@ -114,17 +162,48 @@ const SchedulePage = ({ selectedCourses, displayedCourses, onRemoveCourse, onSel
                                                 {sortedSections.map((section) => {
                                                     const isSelected = selectedSectionId === section.id;
                                                     const formattedTimes = formatSectionDisplay(section.times);
+
+                                                    const conflicts = getConflicts(id, section);
+                                                    const hasChoiceConflict = conflicts.length > 0;
+
+                                                    // light blue selected styles (applied only when no conflict)
+                                                    const selectedStyles = {
+                                                        backgroundColor: '#93c5fd',   // blue-300
+                                                        borderColor: '#60a5fa',       // blue-400
+                                                        color: '#1e3a8a'              // blue-900 text for contrast
+                                                    };
+                                                    const conflictStyles = {
+                                                        backgroundColor: '#dc2626',
+                                                        borderColor: '#dc2626',
+                                                        color: '#ffffff',
+                                                        cursor: 'not-allowed'
+                                                    };
+
                                                     return (
                                                         <button
                                                             key={section.id}
-                                                            onClick={() => onSelectSection(id, section.id)}
+                                                            onClick={() => {
+                                                                if (hasChoiceConflict) {
+                                                                    openConflictModal(id, course.name, section, conflicts);
+                                                                } else {
+                                                                    onSelectSection(id, section.id);
+                                                                }
+                                                            }}
                                                             className={`section-btn ${isSelected ? 'selected' : ''}`}
+                                                            title={hasChoiceConflict ? 'This time conflicts with another selected section' : undefined}
+                                                            style={
+                                                                hasChoiceConflict
+                                                                    ? conflictStyles
+                                                                    : isSelected
+                                                                        ? selectedStyles
+                                                                        : undefined
+                                                            }
                                                         >
                                                             <div className="section-time-display">
                                                                 {formattedTimes.map((timeGroup, idx) => (
                                                                     <div key={idx} className="time-group">
                                                                         <span className="section-days">{timeGroup.days}</span>
-                                                                        <span className="section-time">{periodLabels[timeGroup.start - 1]}</span>
+                                                                        <span className="section-time">{periods[timeGroup.start - 1]}</span>
                                                                         <span className="section-num">ID: {section.id}</span>
                                                                     </div>
                                                                 ))}
@@ -146,6 +225,69 @@ const SchedulePage = ({ selectedCourses, displayedCourses, onRemoveCourse, onSel
                     )}
                 </div>
             </div>
+
+            {conflictModal.open && (
+                <div
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="conflict-title"
+                    style={{
+                        position: 'fixed',
+                        inset: 0,
+                        background: 'rgba(0,0,0,0.45)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 1000
+                    }}
+                    onClick={() => setConflictModal(prev => ({ ...prev, open: false }))}
+                >
+                    <div
+                        onClick={(e) => e.stopPropagation()}
+                        style={{
+                            background: '#fff',
+                            borderRadius: 12,
+                            boxShadow: '0 10px 30px rgba(0,0,0,0.2)',
+                            maxWidth: 600,
+                            width: '90%',
+                            padding: '1rem 1.25rem'
+                        }}
+                    >
+                        <h3 id="conflict-title" style={{ marginTop: 0, marginBottom: '0.5rem' }}>Time conflict</h3>
+                        <p style={{ marginTop: 0 }}>
+                            The selection for <strong>{conflictModal.targetCourseId} — {conflictModal.targetCourseName}</strong> conflicts with the following:
+                        </p>
+                        <ul style={{ paddingLeft: '1.25rem', marginTop: '0.5rem' }}>
+                            {conflictModal.conflicts.map((c) => (
+                                <li key={`${c.courseId}-${c.sectionId}`} style={{ marginBottom: '0.5rem' }}>
+                                    <strong>{c.courseId}</strong> — {c.name} (Section {c.sectionId})
+                                    <div style={{ fontSize: '0.9rem', color: '#52525b' }}>
+                                        {c.overlaps.map((o, i) => (
+                                            <span key={i} style={{ display: 'inline-block', marginRight: 8 }}>
+                                                {`${o.target.day} ${periods[o.target.start - 1]}`}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem', marginTop: '0.75rem' }}>
+                            <button
+                                onClick={() => setConflictModal(prev => ({ ...prev, open: false }))}
+                                style={{
+                                    border: '1px solid #e4e4e7',
+                                    background: '#fff',
+                                    borderRadius: 8,
+                                    padding: '0.4rem 0.8rem',
+                                    cursor: 'pointer'
+                                }}
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
