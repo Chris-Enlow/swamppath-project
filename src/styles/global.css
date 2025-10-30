@@ -945,3 +945,31 @@ main {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+/* Fill entire schedule box when there is a single course (no conflict) */
+.calendar-cell .cell-content:not(.conflict-grid) {
+    height: 100%;
+}
+
+.calendar-cell .cell-content:not(.conflict-grid) .course-chip.fill-cell {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    /* match cell */
+    padding: 0;
+    /* maximize space */
+}
+
+.course-chip.fill-cell strong {
+    font-size: 1rem;
+    /* larger code */
+    line-height: 1;
+}
+
+.course-chip.fill-cell .chip-name {
+    display: none;
+    /* show only the course code */
+}
