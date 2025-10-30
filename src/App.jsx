@@ -5,13 +5,63 @@ import SchedulePage from './pages/SchedulePage';
 import CatalogPage from './pages/CatalogPage';
 import ProfilePage from './pages/ProfilePage';
 import HomePage from './pages/HomePage';
+import OnboardingPage from './pages/OnboardingPage';
 
 // --- App Component (Main) ---
 
 export default function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
   const [page, setPage] = useState('home');
   const [selectedCourses, setSelectedCourses] = useState({});
   const [displayedCourses, setDisplayedCourses] = useState({});
+
+  // Check for existing session on mount
+  useEffect(() => {
+    const savedUser = localStorage.getItem('swamppath_user');
+    if (savedUser) {
+      const userData = JSON.parse(savedUser);
+      setCurrentUser(userData);
+      setIsAuthenticated(true);
+      
+      // Load user's saved courses
+      const savedCourses = localStorage.getItem(`swamppath_courses_${userData.profileKey}`);
+      const savedDisplayed = localStorage.getItem(`swamppath_displayed_${userData.profileKey}`);
+      if (savedCourses) setSelectedCourses(JSON.parse(savedCourses));
+      if (savedDisplayed) setDisplayedCourses(JSON.parse(savedDisplayed));
+    }
+  }, []);
+
+  // Save courses whenever they change
+  useEffect(() => {
+    if (currentUser) {
+      localStorage.setItem(`swamppath_courses_${currentUser.profileKey}`, JSON.stringify(selectedCourses));
+      localStorage.setItem(`swamppath_displayed_${currentUser.profileKey}`, JSON.stringify(displayedCourses));
+    }
+  }, [selectedCourses, displayedCourses, currentUser]);
+
+  const handleLogin = (userData) => {
+    setCurrentUser(userData);
+    setIsAuthenticated(true);
+    localStorage.setItem('swamppath_user', JSON.stringify(userData));
+    
+    // Load this user's saved courses
+    const savedCourses = localStorage.getItem(`swamppath_courses_${userData.profileKey}`);
+    const savedDisplayed = localStorage.getItem(`swamppath_displayed_${userData.profileKey}`);
+    if (savedCourses) setSelectedCourses(JSON.parse(savedCourses));
+    if (savedDisplayed) setDisplayedCourses(JSON.parse(savedDisplayed));
+    
+    setPage('home');
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setCurrentUser(null);
+    setSelectedCourses({});
+    setDisplayedCourses({});
+    setPage('home');
+    localStorage.removeItem('swamppath_user');
+  };
 
   const addCourse = (courseId) => {
     if (mockCourses[courseId]) {
@@ -53,9 +103,14 @@ export default function App() {
     });
   };
 
+  // If not authenticated, show onboarding
+  if (!isAuthenticated) {
+    return <OnboardingPage onLogin={handleLogin} />;
+  }
+
   const renderPage = () => {
     switch (page) {
-      case 'home': return <HomePage />;
+      case 'home': return <HomePage currentUser={currentUser} />;
       case 'schedule': return (
         <SchedulePage
           selectedCourses={selectedCourses}
@@ -71,8 +126,8 @@ export default function App() {
           selectedCourses={selectedCourses}
         />
       );
-      case 'profile': return <ProfilePage />;
-      default: return <HomePage />;
+      case 'profile': return <ProfilePage currentUser={currentUser} />;
+      default: return <HomePage currentUser={currentUser} />;
     }
   };
 
@@ -95,6 +150,9 @@ export default function App() {
             <NavLink pageName="schedule">Schedule</NavLink>
             <NavLink pageName="catalog">Catalog</NavLink>
             <NavLink pageName="profile">Profile</NavLink>
+            <button onClick={handleLogout} className="nav-link logout-btn">
+              Logout
+            </button>
           </div>
         </nav>
       </header>
@@ -104,4 +162,3 @@ export default function App() {
     </div>
   );
 }
-
