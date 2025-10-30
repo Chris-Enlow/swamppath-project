@@ -973,3 +973,235 @@ main {
     display: none;
     /* show only the course code */
 }
+
+/* --- Onboarding Page Styles --- */
+.onboarding-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #00529b 0%, #003e7b 50%, #fa4616 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.onboarding-hero {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: white;
+}
+
+.onboarding-logo {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+.onboarding-title {
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 0 0 0.5rem 0;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.onboarding-subtitle {
+    font-size: 1.25rem;
+    margin: 0;
+    opacity: 0.95;
+}
+
+.onboarding-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    padding: 2.5rem;
+    max-width: 600px;
+    width: 100%;
+}
+
+.onboarding-card h2 {
+    font-size: 1.75rem;
+    margin: 0 0 0.5rem 0;
+    color: var(--primary-color);
+}
+
+.onboarding-instruction {
+    color: var(--dark-gray);
+    margin: 0 0 2rem 0;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: 0.875rem;
+}
+
+.login-input {
+    padding: 0.875rem;
+    border: 2px solid var(--medium-gray);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+.login-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.error-message {
+    background-color: #fee;
+    color: #c33;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    border: 1px solid #fcc;
+}
+
+.onboarding-login-btn {
+    padding: 1rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.onboarding-login-btn:hover {
+    background: #003e7b;
+}
+
+.demo-credentials {
+    background: var(--light-gray);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+}
+
+.demo-title {
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+    color: var(--text-color);
+}
+
+.demo-accounts {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.demo-account {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    border: 2px solid var(--medium-gray);
+}
+
+.demo-account strong {
+    color: var(--primary-color);
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.demo-account span {
+    font-size: 0.875rem;
+    color: var(--dark-gray);
+}
+
+.demo-note {
+    font-size: 0.8rem !important;
+    font-style: italic;
+    color: var(--dark-gray) !important;
+}
+
+.onboarding-features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+}
+
+.onboarding-feature {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background: var(--light-gray);
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.feature-icon-small {
+    font-size: 1.25rem;
+}
+
+/* Logout button styling */
+.logout-btn {
+    background-color: var(--secondary-color) !important;
+    color: white !important;
+}
+
+.logout-btn:hover {
+    background-color: #e03d12 !important;
+}
+
+/* Completed courses display */
+.completed-courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.completed-course-chip {
+    background: var(--primary-color);
+    color: white;
+    padding: 0.75rem;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .onboarding-title {
+        font-size: 2rem;
+    }
+
+    .onboarding-logo {
+        font-size: 3.5rem;
+    }
+
+    .onboarding-card {
+        padding: 1.5rem;
+    }
+
+    .onboarding-features {
+        grid-template-columns: 1fr;
+    }
+}
