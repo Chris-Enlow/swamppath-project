@@ -1,21 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import './styles/global.css';
-import { mockCourses } from './data/mockCourses';
+import { getAvailableCourses } from './data/mockCourses';
 import SchedulePage from './pages/SchedulePage';
 import CatalogPage from './pages/CatalogPage';
 import ProfilePage from './pages/ProfilePage';
-import HomePage from './pages/HomePage';
-
-// --- App Component (Main) ---
+import OnboardingPage from './pages/OnboardingPage';
 
 export default function App() {
-  const [page, setPage] = useState('home');
+  const [page, setPage] = useState('onboarding');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userProfile, setUserProfile] = useState(null);
   const [selectedCourses, setSelectedCourses] = useState({});
   const [displayedCourses, setDisplayedCourses] = useState({});
+  const [availableCourses, setAvailableCourses] = useState({});
+
+  const handleLogin = (profile) => {
+    setUserProfile(profile);
+    setIsLoggedIn(true);
+    const courses = getAvailableCourses(profile.profileKey);
+    setAvailableCourses(courses);
+    setPage('schedule');
+  };
 
   const addCourse = (courseId) => {
-    if (mockCourses[courseId]) {
-      setSelectedCourses(prev => ({ ...prev, [courseId]: mockCourses[courseId] }));
+    if (availableCourses[courseId]) {
+      setSelectedCourses(prev => ({ ...prev, [courseId]: availableCourses[courseId] }));
     }
   };
 
@@ -54,14 +63,18 @@ export default function App() {
   };
 
   const renderPage = () => {
+    if (!isLoggedIn) {
+      return <OnboardingPage onLogin={handleLogin} />;
+    }
+
     switch (page) {
-      case 'home': return <HomePage />;
       case 'schedule': return (
         <SchedulePage
           selectedCourses={selectedCourses}
           displayedCourses={displayedCourses}
           onRemoveCourse={removeCourse}
           onSelectSection={selectSection}
+          userProfile={userProfile}
         />
       );
       case 'catalog': return (
@@ -69,10 +82,19 @@ export default function App() {
           onAddCourse={addCourse}
           onRemoveCourse={removeCourse}
           selectedCourses={selectedCourses}
+          userProfile={userProfile}
         />
       );
-      case 'profile': return <ProfilePage />;
-      default: return <HomePage />;
+      case 'profile': return <ProfilePage userProfile={userProfile} />;
+      default: return (
+        <SchedulePage
+          selectedCourses={selectedCourses}
+          displayedCourses={displayedCourses}
+          onRemoveCourse={removeCourse}
+          onSelectSection={selectSection}
+          userProfile={userProfile}
+        />
+      );
     }
   };
 
@@ -87,21 +109,21 @@ export default function App() {
 
   return (
     <div id="app-root">
-      <header className="app-header">
-        <nav className="main-nav">
-          <div className="logo">SwampPath</div>
-          <div className="nav-links">
-            <NavLink pageName="home">Home</NavLink>
-            <NavLink pageName="schedule">Schedule</NavLink>
-            <NavLink pageName="catalog">Catalog</NavLink>
-            <NavLink pageName="profile">Profile</NavLink>
-          </div>
-        </nav>
-      </header>
+      {isLoggedIn && (
+        <header className="app-header">
+          <nav className="main-nav">
+            <div className="logo">SwampPath</div>
+            <div className="nav-links">
+              <NavLink pageName="schedule">Schedule</NavLink>
+              <NavLink pageName="catalog">Catalog</NavLink>
+              <NavLink pageName="profile">Profile</NavLink>
+            </div>
+          </nav>
+        </header>
+      )}
       <main>
         {renderPage()}
       </main>
     </div>
   );
 }
-
