@@ -1108,7 +1108,627 @@ export const mockCourses = {
             { id: 49802, times: [{ day: 'M', start: 3, end: 4 }, { day: 'W', start: 3, end: 4 }, { day: 'F', start: 3, end: 4 }] },
             { id: 49803, times: [{ day: 'T', start: 6, end: 7 }, { day: 'R', start: 6, end: 7 }] }
         ]
+    },
+    'BSC2010': {
+        name: 'Integrated Principles of Biology 1',
+        credits: 4,
+        professor: 'Prof. Maria Santos',
+        rating: 4.0,
+        prerequisites: [],
+        includesLab: true,
+        sections: [
+            { id: 101001, times: [{ day: 'M', start: 2, end: 3 }, { day: 'W', start: 2, end: 3 }, { day: 'F', start: 2, end: 3 }] },
+            { id: 101002, times: [{ day: 'T', start: 3, end: 4 }, { day: 'R', start: 3, end: 4 }] },
+            { id: 101003, times: [{ day: 'M', start: 5, end: 6 }, { day: 'W', start: 5, end: 6 }] }
+        ]
+    },
+    'BSC2011': {
+        name: 'Integrated Principles of Biology 2',
+        credits: 4,
+        professor: 'Prof. James Chen',
+        rating: 4.1,
+        prerequisites: ['BSC2010'],
+        includesLab: true,
+        sections: [
+            { id: 102001, times: [{ day: 'M', start: 3, end: 4 }, { day: 'W', start: 3, end: 4 }, { day: 'F', start: 3, end: 4 }] },
+            { id: 102002, times: [{ day: 'T', start: 2, end: 3 }, { day: 'R', start: 2, end: 3 }] },
+            { id: 102003, times: [{ day: 'M', start: 6, end: 7 }, { day: 'W', start: 6, end: 7 }] }
+        ]
+    },
+    'CHM2045': {
+        name: 'General Chemistry 1',
+        credits: 4,
+        professor: 'Prof. Rachel Kim',
+        rating: 3.8,
+        prerequisites: ['CHM1025'],
+        includesLab: true,
+        sections: [
+            { id: 103001, times: [{ day: 'M', start: 1, end: 2 }, { day: 'W', start: 1, end: 2 }, { day: 'F', start: 1, end: 2 }] },
+            { id: 103002, times: [{ day: 'T', start: 4, end: 5 }, { day: 'R', start: 4, end: 5 }] },
+            { id: 103003, times: [{ day: 'M', start: 7, end: 8 }, { day: 'W', start: 7, end: 8 }] }
+        ]
+    },
+    'CHM2046': {
+        name: 'General Chemistry 2',
+        credits: 4,
+        professor: 'Prof. David Lee',
+        rating: 3.9,
+        prerequisites: [['CHM2045', 'CHM2095', 'CHM2050']],
+        includesLab: true,
+        sections: [
+            { id: 104001, times: [{ day: 'M', start: 2, end: 3 }, { day: 'W', start: 2, end: 3 }, { day: 'F', start: 2, end: 3 }] },
+            { id: 104002, times: [{ day: 'T', start: 5, end: 6 }, { day: 'R', start: 5, end: 6 }] },
+            { id: 104003, times: [{ day: 'M', start: 4, end: 5 }, { day: 'W', start: 4, end: 5 }] }
+        ]
+    },
+    'FAS4202C': {
+        name: 'Biology of Fishes',
+        credits: 4,
+        professor: 'Prof. Thomas Rivera',
+        rating: 4.5,
+        prerequisites: ['BSC2011'],
+        sections: [
+            { id: 105001, times: [{ day: 'T', start: 2, end: 3 }, { day: 'R', start: 2, end: 3 }] },
+            { id: 105002, times: [{ day: 'M', start: 3, end: 4 }, { day: 'W', start: 3, end: 4 }, { day: 'F', start: 3, end: 4 }] },
+            { id: 105003, times: [{ day: 'T', start: 6, end: 7 }, { day: 'R', start: 6, end: 7 }] }
+        ]
+    },
+    'OCE1001': {
+        name: 'Introduction to Oceanography',
+        credits: 3,
+        professor: 'Prof. Sarah Mitchell',
+        rating: 4.3,
+        prerequisites: [],
+        sections: [
+            { id: 106001, times: [{ day: 'M', start: 5, end: 6 }, { day: 'W', start: 5, end: 6 }, { day: 'F', start: 5, end: 6 }] },
+            { id: 106002, times: [{ day: 'T', start: 1, end: 2 }, { day: 'R', start: 1, end: 2 }] },
+            { id: 106003, times: [{ day: 'M', start: 2, end: 3 }, { day: 'W', start: 2, end: 3 }] }
+        ]
+    },
+    'STA2023': {
+        name: 'Introduction to Statistics 1',
+        credits: 3,
+        professor: 'Prof. Anna Kowalski',
+        rating: 4.0,
+        prerequisites: [],
+        sections: [
+            { id: 107001, times: [{ day: 'M', start: 4, end: 5 }, { day: 'W', start: 4, end: 5 }, { day: 'F', start: 4, end: 5 }] },
+            { id: 107002, times: [{ day: 'T', start: 3, end: 4 }, { day: 'R', start: 3, end: 4 }] },
+            { id: 107003, times: [{ day: 'M', start: 1, end: 2 }, { day: 'W', start: 1, end: 2 }] }
+        ]
+    },
+    'FAS4270': {
+        name: 'Marine Ecological Processes',
+        credits: 3,
+        professor: 'Prof. Elena Rodriguez',
+        rating: 4.4,
+        prerequisites: ['BSC2010', 'BSC2011'],
+        sections: [
+            { id: 108001, times: [{ day: 'T', start: 4, end: 5 }, { day: 'R', start: 4, end: 5 }] },
+            { id: 108002, times: [{ day: 'M', start: 6, end: 7 }, { day: 'W', start: 6, end: 7 }, { day: 'F', start: 6, end: 7 }] },
+            { id: 108003, times: [{ day: 'T', start: 1, end: 2 }, { day: 'R', start: 1, end: 2 }] }
+        ]
+    },
+    'ZOO4926': {
+        name: 'Special Topics in Zoology (Marine Ecology)',
+        credits: 3,
+        professor: 'Prof. Michael Anderson',
+        rating: 4.2,
+        prerequisites: ['BSC2011'],
+        sections: [
+            { id: 109001, times: [{ day: 'M', start: 3, end: 4 }, { day: 'W', start: 3, end: 4 }, { day: 'F', start: 3, end: 4 }] },
+            { id: 109002, times: [{ day: 'T', start: 5, end: 6 }, { day: 'R', start: 5, end: 6 }] },
+            { id: 109003, times: [{ day: 'M', start: 7, end: 8 }, { day: 'W', start: 7, end: 8 }] }
+        ]
+    },
+    'FAS4932': {
+        name: 'Topics in Fisheries and Aquatic Sciences (Biology and Ecology of Algae)',
+        credits: 3,
+        professor: 'Prof. Jennifer Wu',
+        rating: 4.1,
+        prerequisites: [],
+        sections: [
+            { id: 110001, times: [{ day: 'T', start: 2, end: 3 }, { day: 'R', start: 2, end: 3 }] },
+            { id: 110002, times: [{ day: 'M', start: 5, end: 6 }, { day: 'W', start: 5, end: 6 }, { day: 'F', start: 5, end: 6 }] },
+            { id: 110003, times: [{ day: 'T', start: 7, end: 8 }, { day: 'R', start: 7, end: 8 }] }
+        ]
+    },
+    'FNR3410C': {
+        name: 'Natural Resource Sampling',
+        credits: 3,
+        professor: 'Prof. Robert Taylor',
+        rating: 4.0,
+        prerequisites: ['STA2023'],
+        sections: [
+            { id: 111001, times: [{ day: 'M', start: 2, end: 3 }, { day: 'W', start: 2, end: 3 }, { day: 'F', start: 2, end: 3 }] },
+            { id: 111002, times: [{ day: 'T', start: 6, end: 7 }, { day: 'R', start: 6, end: 7 }] },
+            { id: 111003, times: [{ day: 'M', start: 4, end: 5 }, { day: 'W', start: 4, end: 5 }] }
+        ]
+    },
+    'STA3024': {
+        name: 'Introduction to Statistics 2',
+        credits: 3,
+        professor: 'Prof. Linda Garcia',
+        rating: 3.9,
+        prerequisites: ['STA2023'],
+        sections: [
+            { id: 112001, times: [{ day: 'T', start: 3, end: 4 }, { day: 'R', start: 3, end: 4 }] },
+            { id: 112002, times: [{ day: 'M', start: 1, end: 2 }, { day: 'W', start: 1, end: 2 }, { day: 'F', start: 1, end: 2 }] },
+            { id: 112003, times: [{ day: 'T', start: 5, end: 6 }, { day: 'R', start: 5, end: 6 }] }
+        ]
+    },
+    'STA4210': {
+        name: 'Regression Analysis',
+        credits: 3,
+        professor: 'Prof. Kevin Brown',
+        rating: 4.2,
+        prerequisites: [
+            'STA3100',
+            [['STA3024', 'STA3032', 'STA4321'], ['MAS3114', 'MAS4105']]
+        ],
+        sections: [
+            { id: 113001, times: [{ day: 'M', start: 6, end: 7 }, { day: 'W', start: 6, end: 7 }, { day: 'F', start: 6, end: 7 }] },
+            { id: 113002, times: [{ day: 'T', start: 4, end: 5 }, { day: 'R', start: 4, end: 5 }] },
+            { id: 113003, times: [{ day: 'M', start: 3, end: 4 }, { day: 'W', start: 3, end: 4 }] }
+        ]
+    },
+    'STA4222': {
+        name: 'Sample Survey Design',
+        credits: 3,
+        professor: 'Prof. Patricia Martinez',
+        rating: 4.1,
+        prerequisites: [
+            [['STA4321', 'STA2023'], 'STA3032', 'STA4322']
+        ],
+        sections: [
+            { id: 114001, times: [{ day: 'T', start: 1, end: 2 }, { day: 'R', start: 1, end: 2 }] },
+            { id: 114002, times: [{ day: 'M', start: 7, end: 8 }, { day: 'W', start: 7, end: 8 }, { day: 'F', start: 7, end: 8 }] },
+            { id: 114003, times: [{ day: 'T', start: 6, end: 7 }, { day: 'R', start: 6, end: 7 }] }
+        ]
+    },
+    'FNR4660': {
+        name: 'Natural Resource Policy and Economics',
+        credits: 3,
+        professor: 'Prof. Christopher Davis',
+        rating: 4.0,
+        prerequisites: [],
+        sections: [
+            { id: 115001, times: [{ day: 'M', start: 5, end: 6 }, { day: 'W', start: 5, end: 6 }, { day: 'F', start: 5, end: 6 }] },
+            { id: 115002, times: [{ day: 'T', start: 2, end: 3 }, { day: 'R', start: 2, end: 3 }] },
+            { id: 115003, times: [{ day: 'M', start: 1, end: 2 }, { day: 'W', start: 1, end: 2 }] }
+        ]
+    },
+    'GLY3083C': {
+        name: 'Fundamentals of Marine Sciences',
+        credits: 3,
+        professor: 'Prof. Amanda White',
+        rating: 4.3,
+        prerequisites: ['OCE1001'],
+        sections: [
+            { id: 116001, times: [{ day: 'T', start: 3, end: 4 }, { day: 'R', start: 3, end: 4 }] },
+            { id: 116002, times: [{ day: 'M', start: 4, end: 5 }, { day: 'W', start: 4, end: 5 }, { day: 'F', start: 4, end: 5 }] },
+            { id: 116003, times: [{ day: 'T', start: 7, end: 8 }, { day: 'R', start: 7, end: 8 }] }
+        ]
+    },
+    'PHY2004': {
+        name: 'Applied Physics 1',
+        credits: 4,
+        professor: 'Prof. George Thompson',
+        rating: 3.7,
+        prerequisites: [],
+        includesLab: true,
+        sections: [
+            { id: 117001, times: [{ day: 'M', start: 2, end: 3 }, { day: 'W', start: 2, end: 3 }, { day: 'F', start: 2, end: 3 }] },
+            { id: 117002, times: [{ day: 'T', start: 5, end: 6 }, { day: 'R', start: 5, end: 6 }] },
+            { id: 117003, times: [{ day: 'M', start: 6, end: 7 }, { day: 'W', start: 6, end: 7 }] }
+        ]
+    },
+    'ZOO4205C': {
+        name: 'Invertebrate Biodiversity',
+        credits: 4,
+        professor: 'Prof. Susan Johnson',
+        rating: 4.4,
+        prerequisites: ['BSC2011'],
+        sections: [
+            { id: 118001, times: [{ day: 'T', start: 4, end: 5 }, { day: 'R', start: 4, end: 5 }] },
+            { id: 118002, times: [{ day: 'M', start: 3, end: 4 }, { day: 'W', start: 3, end: 4 }, { day: 'F', start: 3, end: 4 }] },
+            { id: 118003, times: [{ day: 'T', start: 1, end: 2 }, { day: 'R', start: 1, end: 2 }] }
+        ]
+    },
+    'FAS2024': {
+        name: 'Sustainable Fisheries',
+        credits: 3,
+        professor: 'Prof. Marine Smith',
+        rating: 4.2,
+        prerequisites: [],
+        majorElective: true,
+        sections: [
+            { id: 45821, times: [{ day: 'M', start: 2, end: 3 }, { day: 'W', start: 2, end: 3 }, { day: 'F', start: 2, end: 3 }] },
+            { id: 45822, times: [{ day: 'T', start: 3, end: 4 }, { day: 'R', start: 3, end: 4 }] }
+        ]
+    },
+    'FAS4305C': {
+        name: 'Introduction to Freshwater Fishery Science',
+        credits: 4,
+        professor: 'Prof. River Johnson',
+        rating: 4.3,
+        prerequisites: [],
+        majorElective: true,
+        sections: [
+            { id: 67234, times: [{ day: 'M', start: 1, end: 3 }, { day: 'W', start: 1, end: 3 }] },
+            { id: 67235, times: [{ day: 'T', start: 4, end: 6 }, { day: 'R', start: 4, end: 6 }] }
+        ]
+    },
+    'FAS4932-AIEP': {
+        name: 'Topics in Fisheries and Aquatic Sciences (Aquatic Invertebrate Ecological Physiology)',
+        credits: 3,
+        professor: 'Prof. Coral Davis',
+        rating: 4.1,
+        prerequisites: [],
+        majorElective: true,
+        sections: [
+            { id: 53678, times: [{ day: 'M', start: 3, end: 4 }, { day: 'W', start: 3, end: 4 }, { day: 'F', start: 3, end: 4 }] },
+            { id: 53679, times: [{ day: 'T', start: 2, end: 3 }, { day: 'R', start: 2, end: 3 }] }
+        ]
+    },
+    'FAS4932-FE': {
+        name: 'Topics in Fisheries and Aquatic Sciences (Field Ecology of Aquatic Organisms)',
+        credits: 4,
+        professor: 'Prof. Lake Martinez',
+        rating: 4.5,
+        prerequisites: [],
+        majorElective: true,
+        sections: [
+            { id: 29841, times: [{ day: 'T', start: 1, end: 3 }, { day: 'R', start: 1, end: 3 }] },
+            { id: 29842, times: [{ day: 'M', start: 3, end: 5 }, { day: 'W', start: 3, end: 5 }] }
+        ]
+    },
+    'FAS4932-CRE': {
+        name: 'Topics in Fisheries and Aquatic Sciences (Coral Reef Ecology)',
+        credits: 3,
+        professor: 'Prof. Reef Anderson',
+        rating: 4.6,
+        prerequisites: [],
+        majorElective: true,
+        sections: [
+            { id: 71523, times: [{ day: 'M', start: 4, end: 5 }, { day: 'W', start: 4, end: 5 }, { day: 'F', start: 4, end: 5 }] },
+            { id: 71524, times: [{ day: 'T', start: 1, end: 2 }, { day: 'R', start: 1, end: 2 }] },
+            { id: 71525, times: [{ day: 'M', start: 2, end: 3 }, { day: 'W', start: 2, end: 3 }, { day: 'F', start: 2, end: 3 }] }
+        ]
+    },
+    'FAS4932-IE': {
+        name: 'Topics in Fisheries and Aquatic Sciences (Invasion Ecology of Aquatic Animals)',
+        credits: 3,
+        professor: 'Prof. Tide Wilson',
+        rating: 4.0,
+        prerequisites: [],
+        majorElective: true,
+        sections: [
+            { id: 38564, times: [{ day: 'T', start: 2, end: 3 }, { day: 'R', start: 2, end: 3 }] },
+            { id: 38565, times: [{ day: 'M', start: 5, end: 6 }, { day: 'W', start: 5, end: 6 }, { day: 'F', start: 5, end: 6 }] }
+        ]
+    },
+    'PCB4043C': {
+        name: 'General Ecology',
+        credits: 4,
+        professor: 'Prof. Eco Thompson',
+        rating: 4.4,
+        prerequisites: ['BSC2011', 'BSC2011L'],
+        majorElective: true,
+        sections: [
+            { id: 82457, times: [{ day: 'M', start: 2, end: 4 }, { day: 'W', start: 2, end: 4 }] },
+            { id: 82458, times: [{ day: 'T', start: 3, end: 5 }, { day: 'R', start: 3, end: 5 }] }
+        ]
+    },
+    'PCB4674': {
+        name: 'Evolution',
+        credits: 4,
+        professor: 'Prof. Darwin Garcia',
+        rating: 4.3,
+        prerequisites: ['BSC2011', 'BSC2011L'],
+        majorElective: true,
+        sections: [
+            { id: 94362, times: [{ day: 'M', start: 1, end: 3 }, { day: 'F', start: 1, end: 3 }] },
+            { id: 94363, times: [{ day: 'T', start: 4, end: 6 }, { day: 'R', start: 4, end: 6 }] }
+        ]
+    },
+    'VME4012': {
+        name: 'Aquatic Animal Conservation Issues',
+        credits: 3,
+        professor: 'Prof. Conservation Lee',
+        rating: 4.2,
+        prerequisites: [],
+        majorElective: true,
+        sections: [
+            { id: 61739, times: [{ day: 'M', start: 5, end: 6 }, { day: 'W', start: 5, end: 6 }, { day: 'F', start: 5, end: 6 }] },
+            { id: 61740, times: [{ day: 'T', start: 3, end: 4 }, { day: 'R', start: 3, end: 4 }] }
+        ]
+    },
+    'VME4906': {
+        name: 'Problems in Veterinary Science (Introduction to Marine Wildlife)',
+        credits: 3,
+        professor: 'Prof. Wildlife Brown',
+        rating: 4.1,
+        prerequisites: [],
+        majorElective: true,
+        sections: [
+            { id: 52981, times: [{ day: 'T', start: 1, end: 2 }, { day: 'R', start: 1, end: 2 }] },
+            { id: 52982, times: [{ day: 'M', start: 4, end: 5 }, { day: 'W', start: 4, end: 5 }, { day: 'F', start: 4, end: 5 }] }
+        ]
+    },
+    'WIS3553C': {
+        name: 'Introduction to Conservation Genetics',
+        credits: 4,
+        professor: 'Prof. Genetics Taylor',
+        rating: 4.3,
+        prerequisites: ['STA2023'],
+        majorElective: true,
+        sections: [
+            { id: 48726, times: [{ day: 'M', start: 3, end: 5 }, { day: 'W', start: 3, end: 5 }] },
+            { id: 48727, times: [{ day: 'T', start: 1, end: 3 }, { day: 'R', start: 1, end: 3 }] }
+        ]
+    },
+    'WIS4203C': {
+        name: 'Landscape Ecology and Conservation',
+        credits: 3,
+        professor: 'Prof. Landscape White',
+        rating: 4.0,
+        prerequisites: ['STA2023'],
+        majorElective: true,
+        sections: [
+            { id: 35147, times: [{ day: 'T', start: 2, end: 3 }, { day: 'R', start: 2, end: 3 }] },
+            { id: 35148, times: [{ day: 'M', start: 1, end: 2 }, { day: 'W', start: 1, end: 2 }, { day: 'F', start: 1, end: 2 }] }
+        ]
+    },
+    'ZOO4403C': {
+        name: 'Marine Biology',
+        credits: 4,
+        professor: 'Prof. Ocean Martinez',
+        rating: 4.7,
+        prerequisites: ['BSC2011', 'BSC2011L'],
+        majorElective: true,
+        sections: [
+            { id: 79415, times: [{ day: 'M', start: 1, end: 3 }, { day: 'W', start: 1, end: 3 }] },
+            { id: 79416, times: [{ day: 'T', start: 3, end: 5 }, { day: 'R', start: 3, end: 5 }] }
+        ]
+    },
+    'AEB3450': {
+        name: 'Introduction to Natural Resource and Environmental Economics',
+        credits: 3,
+        professor: 'Prof. Economics Clark',
+        rating: 3.9,
+        prerequisites: ['AEB3103'],
+        majorElective: true,
+        sections: [
+            { id: 26893, times: [{ day: 'M', start: 2, end: 3 }, { day: 'W', start: 2, end: 3 }, { day: 'F', start: 2, end: 3 }] },
+            { id: 26894, times: [{ day: 'T', start: 4, end: 5 }, { day: 'R', start: 4, end: 5 }] }
+        ]
+    },
+    'FNR3602': {
+        name: 'Society and Natural Resources',
+        credits: 3,
+        professor: 'Prof. Society Rodriguez',
+        rating: 4.0,
+        prerequisites: [],
+        majorElective: true,
+        sections: [
+            { id: 54728, times: [{ day: 'T', start: 4, end: 5 }, { day: 'R', start: 4, end: 5 }] },
+            { id: 54729, times: [{ day: 'M', start: 3, end: 4 }, { day: 'W', start: 3, end: 4 }, { day: 'F', start: 3, end: 4 }] }
+        ]
+    },
+    'GEO4300': {
+        name: 'Environmental Biogeography',
+        credits: 3,
+        professor: 'Prof. Geography Lewis',
+        rating: 4.1,
+        prerequisites: [],
+        majorElective: true,
+        sections: [
+            { id: 63582, times: [{ day: 'M', start: 3, end: 4 }, { day: 'W', start: 3, end: 4 }, { day: 'F', start: 3, end: 4 }] },
+            { id: 63583, times: [{ day: 'T', start: 2, end: 3 }, { day: 'R', start: 2, end: 3 }] }
+        ]
+    },
+    'WIS4523': {
+        name: 'Human Dimensions of Natural Resource Conservation',
+        credits: 3,
+        professor: 'Prof. Human Walker',
+        rating: 3.8,
+        prerequisites: ['WIS3401'],
+        majorElective: true,
+        sections: [
+            { id: 41956, times: [{ day: 'T', start: 1, end: 2 }, { day: 'R', start: 1, end: 2 }] },
+            { id: 41957, times: [{ day: 'M', start: 4, end: 5 }, { day: 'W', start: 4, end: 5 }, { day: 'F', start: 4, end: 5 }] }
+        ]
+    },
+    'EGN4932-PO': {
+        name: 'Special Topics (Physical Oceanography)',
+        credits: 3,
+        professor: 'Prof. Physics Hall',
+        rating: 4.2,
+        prerequisites: [],
+        majorElective: true,
+        sections: [
+            { id: 87231, times: [{ day: 'M', start: 4, end: 5 }, { day: 'W', start: 4, end: 5 }, { day: 'F', start: 4, end: 5 }] },
+            { id: 87232, times: [{ day: 'T', start: 3, end: 4 }, { day: 'R', start: 3, end: 4 }] }
+        ]
+    },
+    'GLY3074': {
+        name: 'Oceans and Global Climate Change',
+        credits: 3,
+        professor: 'Prof. Climate Young',
+        rating: 4.5,
+        prerequisites: [],
+        majorElective: true,
+        sections: [
+            { id: 19674, times: [{ day: 'T', start: 2, end: 3 }, { day: 'R', start: 2, end: 3 }] },
+            { id: 19675, times: [{ day: 'M', start: 1, end: 2 }, { day: 'W', start: 1, end: 2 }, { day: 'F', start: 1, end: 2 }] },
+            { id: 19676, times: [{ day: 'T', start: 5, end: 6 }, { day: 'R', start: 5, end: 6 }] }
+        ]
+    },
+    'GLY4734': {
+        name: 'Coastal Morphology and Processes',
+        credits: 3,
+        professor: 'Prof. Coastal Allen',
+        rating: 4.3,
+        prerequisites: ['GEO2200'],
+        majorElective: true,
+        sections: [
+            { id: 72518, times: [{ day: 'M', start: 1, end: 2 }, { day: 'W', start: 1, end: 2 }, { day: 'F', start: 1, end: 2 }] },
+            { id: 72519, times: [{ day: 'T', start: 4, end: 5 }, { day: 'R', start: 4, end: 5 }] }
+        ]
+    },
+    'GLY4930-GO': {
+        name: 'Special Topics in Geology (Geochemical Oceanography)',
+        credits: 3,
+        professor: 'Prof. Geology King',
+        rating: 4.0,
+        prerequisites: [],
+        majorElective: true,
+        sections: [
+            { id: 58392, times: [{ day: 'T', start: 3, end: 4 }, { day: 'R', start: 3, end: 4 }] },
+            { id: 58393, times: [{ day: 'M', start: 2, end: 3 }, { day: 'W', start: 2, end: 3 }, { day: 'F', start: 2, end: 3 }] }
+        ]
+    },
+    'GIS3072C': {
+        name: 'Geographic Information Systems',
+        credits: 3,
+        professor: 'Prof. GIS Wright',
+        rating: 4.4,
+        prerequisites: [],
+        majorElective: true,
+        sections: [
+            { id: 34659, times: [{ day: 'M', start: 2, end: 3 }, { day: 'W', start: 2, end: 3 }, { day: 'F', start: 2, end: 3 }] },
+            { id: 34660, times: [{ day: 'T', start: 4, end: 5 }, { day: 'R', start: 4, end: 5 }] }
+        ]
+    },
+    'STA4211': {
+        name: 'Design of Experiments',
+        credits: 3,
+        professor: 'Prof. Stats Lopez',
+        rating: 3.9,
+        prerequisites: ['STA4210'],
+        majorElective: true,
+        sections: [
+            { id: 91247, times: [{ day: 'M', start: 3, end: 4 }, { day: 'W', start: 3, end: 4 }, { day: 'F', start: 3, end: 4 }] },
+            { id: 91248, times: [{ day: 'T', start: 1, end: 2 }, { day: 'R', start: 1, end: 2 }] }
+        ]
+    },
+    'WIS4501': {
+        name: 'Introduction to Wildlife Population Ecology',
+        credits: 3,
+        professor: 'Prof. Wildlife Hill',
+        rating: 4.2,
+        prerequisites: ['PCB3063', 'WIS3401'],
+        majorElective: true,
+        sections: [
+            { id: 65813, times: [{ day: 'T', start: 1, end: 2 }, { day: 'R', start: 1, end: 2 }] },
+            { id: 65814, times: [{ day: 'M', start: 5, end: 6 }, { day: 'W', start: 5, end: 6 }, { day: 'F', start: 5, end: 6 }] }
+        ]
+    },
+    'WIS4601C': {
+        name: 'Quantitative Wildlife Ecology',
+        credits: 3,
+        professor: 'Prof. Quantitative Scott',
+        rating: 4.1,
+        prerequisites: ['STA2023', 'WIS3401'],
+        majorElective: true,
+        sections: [
+            { id: 23785, times: [{ day: 'M', start: 4, end: 5 }, { day: 'W', start: 4, end: 5 }, { day: 'F', start: 4, end: 5 }] },
+            { id: 23786, times: [{ day: 'T', start: 2, end: 3 }, { day: 'R', start: 2, end: 3 }] }
+        ]
+    },
+    'FAS6337C': {
+        name: 'Fish Population Dynamics',
+        credits: 4,
+        professor: 'Prof. Fish Green',
+        rating: 4.3,
+        prerequisites: ['STA6166'],
+        majorElective: true,
+        sections: [
+            { id: 56421, times: [{ day: 'M', start: 1, end: 3 }, { day: 'W', start: 1, end: 3 }] },
+            { id: 56422, times: [{ day: 'T', start: 3, end: 5 }, { day: 'R', start: 3, end: 5 }] }
+        ]
+    },
+    'GLY6075': {
+        name: 'Global Climate Change: Past, Present, and Future',
+        credits: 3,
+        professor: 'Prof. Climate Adams',
+        rating: 4.6,
+        prerequisites: ['GLY4552C'],
+        majorElective: true,
+        sections: [
+            { id: 47593, times: [{ day: 'T', start: 2, end: 3 }, { day: 'R', start: 2, end: 3 }] },
+            { id: 47594, times: [{ day: 'M', start: 4, end: 5 }, { day: 'W', start: 4, end: 5 }, { day: 'F', start: 4, end: 5 }] }
+        ]
+    },
+    'OCP6295': {
+        name: 'Estuarine and Shelf Hydrodynamics I',
+        credits: 3,
+        professor: 'Prof. Hydro Baker',
+        rating: 4.2,
+        prerequisites: ['OCP6050'],
+        majorElective: true,
+        sections: [
+            { id: 81326, times: [{ day: 'M', start: 3, end: 4 }, { day: 'W', start: 3, end: 4 }, { day: 'F', start: 3, end: 4 }] },
+            { id: 81327, times: [{ day: 'T', start: 1, end: 2 }, { day: 'R', start: 1, end: 2 }] }
+        ]
+    },
+    'ZOO6406': {
+        name: 'Biology of Sea Turtles',
+        credits: 3,
+        professor: 'Prof. Turtle Nelson',
+        rating: 4.8,
+        prerequisites: [],
+        majorElective: true,
+        sections: [
+            { id: 39864, times: [{ day: 'T', start: 3, end: 4 }, { day: 'R', start: 3, end: 4 }] },
+            { id: 39865, times: [{ day: 'M', start: 2, end: 3 }, { day: 'W', start: 2, end: 3 }, { day: 'F', start: 2, end: 3 }] },
+            { id: 39866, times: [{ day: 'T', start: 5, end: 6 }, { day: 'R', start: 5, end: 6 }] }
+        ]
+    },
+    'ZOO6456C': {
+        name: 'Ichthyology',
+        credits: 4,
+        professor: 'Prof. Fish Carter',
+        rating: 4.5,
+        prerequisites: [],
+        majorElective: true,
+        sections: [
+            { id: 76542, times: [{ day: 'M', start: 2, end: 4 }, { day: 'W', start: 2, end: 4 }] },
+            { id: 76543, times: [{ day: 'T', start: 1, end: 3 }, { day: 'R', start: 1, end: 3 }] }
+        ]
     }
 };
+
+// Mark only current courses as Computer Science (future additions won't be tagged automatically)
+const CURRENT_CS_COURSE_IDS = [
+    'ENC3246', 'ENC2256', 'MAC2311', 'MAC2312', 'MAC2313', 'MAS3114', 'PHY2048', 'PHY2049', 'STA3032',
+    'COP3502C', 'COP3503C', 'COP3530', 'COT3100', 'CDA3101', 'CEN3031', 'CIS4301', 'CIS4914', 'EGN4952',
+    'CNT4007', 'COP4020', 'COP4533', 'COP4600', 'EGS4034', 'CGS3065', 'CIS4905', 'CIS4930', 'CIS4940',
+    'CIS4949', 'EGN4912', 'EGN4951', 'EIN3354', 'EEL3701C', 'EEL4744C', 'CAI4104', 'CAP3020', 'CAP3027',
+    'CAP3032', 'CAP3034', 'CAP3220', 'CAP4053', 'CAP4112', 'CAP4136', 'CAP4174', 'CAP4410', 'CAP4613',
+    'CAP4621', 'CAP4641', 'CAP4730', 'CAP4770', 'CAP4773', 'CDA4102', 'CDA4324C', 'CDA4630', 'CEN3913',
+    'CEN4072', 'CEN4721', 'CEN4722', 'CEN4725', 'CEN4730', 'CEN4907C', 'CEN4908C', 'CEN4914', 'CGS2032',
+    'CGS3063', 'CGS4144', 'CGS4853C', 'CIS4204', 'CIS4213', 'CIS4360', 'CIS4362', 'CIS4715', 'CIS4912C',
+    'CIS4913C', 'CNT4520', 'CNT4731', 'COP2271', 'COP3013', 'COP3275', 'COP3504C', 'COP4331', 'COP4554',
+    'COP4620', 'COP4720', 'COT4501', 'IDC4710'
+];
+CURRENT_CS_COURSE_IDS.forEach(id => {
+    if (mockCourses[id]) mockCourses[id].computerScienceCourse = true;
+});
+
+// Mark marine science courses
+const MARINE_SCIENCE_COURSE_IDS = [
+    'BSC2010', 'BSC2011', 'CHM2045', 'CHM2046', 'FAS4202C', 'OCE1001', 'STA2023',
+    'FAS4270', 'ZOO4926', 'FAS4932', 'FNR3410C', 'STA3024', 'STA4210', 'STA4222',
+    'FNR4660', 'GLY3083C', 'PHY2004', 'ZOO4205C', 'FAS2024', 'FAS4305C', 'FAS4932-AIEP',
+    'FAS4932-FE', 'FAS4932-CRE', 'FAS4932-IE', 'PCB4043C', 'PCB4674', 'VME4012', 'VME4906',
+    'WIS3553C', 'WIS4203C', 'ZOO4403C', 'AEB3450', 'FNR3602', 'GEO4300', 'WIS4523', 'EGN4932-PO',
+    'GLY3074', 'GLY4734', 'GLY4930-GO', 'GIS3072C', 'STA4211', 'WIS4501', 'WIS4601C', 'FAS6337C',
+    'GLY6075', 'OCP6295', 'ZOO6406', 'ZOO6456C'
+];
+MARINE_SCIENCE_COURSE_IDS.forEach(id => {
+    if (mockCourses[id]) mockCourses[id].marineScienceCourse = true;
+});
 
 export const catalogData = Object.entries(mockCourses).map(([id, data]) => ({ id, ...data }));
