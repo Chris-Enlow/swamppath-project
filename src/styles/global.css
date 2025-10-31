@@ -555,13 +555,10 @@ main {
 
 .calendar-cell.has-conflict {
     border: 1px solid #fecaca;
-    /* light red border */
     background-color: #fff7f7;
-    /* very light red bg */
 }
 
 .conflict-item {
-    /* keep items readable */
     opacity: 1;
 }
 
@@ -573,7 +570,6 @@ main {
     opacity: 0.9;
 }
 
-/* Weekly schedule: improve overlapping item layout */
 .calendar-cell {
     position: relative;
     display: flex;
@@ -621,7 +617,6 @@ main {
     opacity: 0.9;
 }
 
-/* soften conflict styling */
 .calendar-cell.has-conflict {
     border: 1px solid #fecaca;
     background-color: #fff7f7;
@@ -635,7 +630,6 @@ main {
     opacity: 0.9;
 }
 
-/* --- Profile Page --- */
 .profile-card {
     max-width: 600px;
     margin: 0 auto;
@@ -684,11 +678,9 @@ main {
 
 .on-track {
     color: #16a34a;
-    /* green-600 */
     font-weight: bold;
 }
 
-/* --- Home Page --- */
 .home-hero {
     text-align: center;
     padding: 3rem 1rem;
@@ -761,7 +753,6 @@ main {
     opacity: 0.95;
 }
 
-/* --- Responsive Adjustments --- */
 @media (min-width: 768px) {
     .schedule-page-container {
         flex-direction: row;
@@ -784,7 +775,6 @@ main {
 
     .course-info span {
         display: inline;
-        /* Show full course name on larger screens */
     }
 }
 
@@ -857,7 +847,6 @@ main {
 
 .conflict-warning {
     color: #dc2626;
-    /* red-600 */
     font-size: 0.875rem;
     right: 4px;
     top: 4px;
@@ -881,64 +870,51 @@ main {
     font-weight: 600;
 }
 
-/* High-contrast readable chips in Weekly Schedule */
 .course-info,
 .course-chip {
     color: #ffffff;
-    /* white text for contrast */
     border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 6px;
     padding: 2px 6px;
     font-weight: 600;
     text-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
-    /* improve readability on dark bg */
 }
 
-/* Darker, higher-contrast palettes (override previous) */
 .course-blue {
     background-color: #1e3a8a;
     border-color: #1d4ed8;
 }
 
-/* blue-800 bg, blue-600 border */
 .course-green {
     background-color: #166534;
     border-color: #15803d;
 }
 
-/* green-800 bg, green-600 border */
 .course-indigo {
     background-color: #3730a3;
     border-color: #4f46e5;
 }
 
-/* indigo-800 bg, indigo-600 border */
 .course-red {
     background-color: #991b1b;
     border-color: #dc2626;
 }
 
-/* red-800 bg, red-600 border */
 .course-purple {
     background-color: #6b21a8;
     border-color: #9333ea;
 }
 
-/* purple-800 bg, purple-500 border */
 .course-yellow {
     background-color: #92400e;
     border-color: #d97706;
 }
 
-/* amber-800 bg, amber-600 border */
-
-/* Keep chips readable when there is a conflict */
 .calendar-cell.has-conflict .course-info,
 .calendar-cell.has-conflict .course-chip {
     box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
 }
 
-/* Truncate long names inside chips */
 .course-info span,
 .chip-name {
     white-space: nowrap;
@@ -946,7 +922,6 @@ main {
     text-overflow: ellipsis;
 }
 
-/* Fill entire schedule box when there is a single course (no conflict) */
 .calendar-cell .cell-content:not(.conflict-grid) {
     height: 100%;
 }
@@ -958,23 +933,18 @@ main {
     align-items: center;
     justify-content: center;
     border-radius: 8px;
-    /* match cell */
     padding: 0;
-    /* maximize space */
 }
 
 .course-chip.fill-cell strong {
     font-size: 1rem;
-    /* larger code */
     line-height: 1;
 }
 
 .course-chip.fill-cell .chip-name {
     display: none;
-    /* show only the course code */
 }
 
-/* --- Onboarding Page Styles --- */
 .onboarding-container {
     min-height: 100vh;
     background: linear-gradient(135deg, #00529b 0%, #003e7b 50%, #fa4616 100%);
@@ -1159,7 +1129,6 @@ main {
     font-size: 1.25rem;
 }
 
-/* Logout button styling */
 .logout-btn {
     background-color: var(--secondary-color) !important;
     color: white !important;
@@ -1169,7 +1138,6 @@ main {
     background-color: #e03d12 !important;
 }
 
-/* Completed courses display */
 .completed-courses-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
@@ -1187,7 +1155,6 @@ main {
     font-size: 0.875rem;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
     .onboarding-title {
         font-size: 2rem;
@@ -1204,4 +1171,454 @@ main {
     .onboarding-features {
         grid-template-columns: 1fr;
     }
+}
+.major-filter-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+
+.toggle-checkbox {
+    display: none;
+}
+
+.toggle-slider {
+    position: relative;
+    width: 52px;
+    height: 28px;
+    background-color: var(--medium-gray);
+    border-radius: 34px;
+    transition: background-color 0.3s;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-slider::before {
+    content: '';
+    position: absolute;
+    height: 22px;
+    width: 22px;
+    left: 3px;
+    top: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-checkbox:checked + .toggle-slider {
+    background-color: var(--primary-color);
+}
+
+.toggle-checkbox:checked + .toggle-slider::before {
+    transform: translateX(24px);
+}
+
+.toggle-label {
+    font-weight: 500;
+    color: var(--text-color);
+    font-size: 0.95rem;
+}
+
+.toggle-checkbox:checked ~ .toggle-label {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.major-filter-toggle:hover .toggle-slider {
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 0 3px rgba(0, 82, 155, 0.1);
+}
+
+.major-filter-toggle:hover .toggle-checkbox:checked + .toggle-slider {
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 0 3px rgba(0, 82, 155, 0.15);
+}
+
+.no-results-message {
+    text-align: center;
+    padding: 3rem 1rem;
+    background: var(--light-gray);
+    border-radius: 12px;
+    margin: 2rem 0;
+}
+
+.no-results-message p {
+    margin: 0.5rem 0;
+    color: var(--dark-gray);
+}
+
+.no-results-message p:first-child {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+
+@media (max-width: 768px) {
+    .major-filter-toggle {
+        font-size: 0.85rem;
+    }
+
+    .toggle-label {
+        font-size: 0.85rem;
+    }
+}
+
+/* Course status badges */
+.course-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin: 0.5rem 0;
+}
+
+.completed-badge {
+    background: #dcfce7;
+    color: #166534;
+    border: 1px solid #86efac;
+}
+
+.prereq-badge {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fca5a5;
+}
+
+/* Course card states */
+.course-completed {
+    border-color: #86efac !important;
+    background: #f0fdf4;
+    opacity: 0.85;
+}
+
+.course-locked {
+    border-color: #fca5a5 !important;
+    background: #fef2f2;
+    opacity: 0.85;
+}
+
+/* Prerequisites display */
+.prerequisites-display {
+    background: #f9fafb;
+    padding: 0.75rem;
+    border-radius: 6px;
+    margin: 0.75rem 0;
+    font-size: 0.875rem;
+}
+
+.prerequisites-display strong {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #6b7280;
+}
+
+.prereq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.prereq-item {
+    display: block;
+    padding: 0.25rem 0;
+}
+
+.prereq-met {
+    color: #16a34a;
+    font-weight: 600;
+}
+
+.prereq-missing {
+    color: #dc2626;
+}
+
+/* Planner Styles */
+.planner-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.planner-semester-card {
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 300px;
+}
+
+.planner-semester-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.planner-semester-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #1f2937;
+}
+
+.semester-credits {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.planner-course-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.planner-empty-state {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9ca3af;
+    font-style: italic;
+}
+
+.planner-course-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.planner-course-item:hover {
+    background: #f3f4f6;
+    border-color: #d1d5db;
+}
+
+.planner-course-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex: 1;
+}
+
+.planner-course-info strong {
+    color: #1f2937;
+    font-size: 0.95rem;
+}
+
+.planner-course-name {
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+.planner-course-credits {
+    color: #9ca3af;
+    font-size: 0.875rem;
+}
+
+.planner-remove-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+    background: white;
+    color: #ef4444;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.planner-remove-btn:hover {
+    background: #fee2e2;
+    border-color: #fca5a5;
+}
+
+.planner-add-course-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.planner-add-course-btn:hover {
+    background: #2563eb;
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 12px;
+    max-width: 800px;
+    width: 100%;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.planner-modal {
+    padding: 1.5rem;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.modal-close {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: #f3f4f6;
+    border-radius: 6px;
+    font-size: 1.5rem;
+    color: #6b7280;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-close:hover {
+    background: #e5e7eb;
+}
+
+.planner-course-selector-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.planner-selector-item {
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition: all 0.2s;
+}
+
+.planner-selector-item:not(.disabled):hover {
+    border-color: #93c5fd;
+    background: #eff6ff;
+}
+
+.planner-selector-item.disabled {
+    opacity: 0.6;
+    background: #f9fafb;
+}
+
+.planner-selector-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 1rem;
+}
+
+.planner-status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.planner-status-badge.completed {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.planner-status-badge.planned {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.planner-status-badge.locked {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.planner-prereq-display {
+    background: #f9fafb;
+    padding: 0.75rem;
+    border-radius: 6px;
+}
+
+.prereq-chip {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+.prereq-chip.met {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.prereq-chip.missing {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.planner-selector-add-btn {
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 8px;
+    background: #3b82f6;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.planner-selector-add-btn:not(:disabled):hover {
+    background: #2563eb;
+}
+
+.planner-selector-add-btn:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
 }
