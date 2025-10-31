@@ -6,7 +6,6 @@ const PlannerPage = ({ currentUser, plannedCourses, onUpdatePlannedCourses }) =>
   const [showCourseSelector, setShowCourseSelector] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
-  // --- Semesters generator (unchanged) ---
   const generateSemesters = () => {
     const semesters = [];
     const currentYear = new Date().getFullYear();
@@ -26,7 +25,6 @@ const PlannerPage = ({ currentUser, plannedCourses, onUpdatePlannedCourses }) =>
 
   const semesters = generateSemesters();
 
-  // --- Add/remove helpers (allow anything; only block exact-duplicate in same semester) ---
   const addCourseToSemester = (courseId, semesterId) => {
     const newPlanned = { ...plannedCourses };
     const list = newPlanned[semesterId] || [];
@@ -72,7 +70,7 @@ const PlannerPage = ({ currentUser, plannedCourses, onUpdatePlannedCourses }) =>
       <div style={{ marginBottom: '2rem' }}>
         <h2 className="page-title">Academic Planner</h2>
         <p style={{ color: '#6b7280', marginTop: '0.5rem' }}>
-          Plan any courses in any future semester. (Prerequisites and completions are ignored for this demo.)
+          Plan any courses in any future semester.
         </p>
         <div style={{ display: 'flex', gap: '2rem', marginTop: '1rem', padding: '1rem', background: '#f9fafb', borderRadius: '8px' }}>
           <div><strong>Completed Credits:</strong> {currentUser?.credits || 0}</div>
@@ -134,7 +132,6 @@ const PlannerPage = ({ currentUser, plannedCourses, onUpdatePlannedCourses }) =>
         })}
       </div>
 
-      {/* Course Selector Modal */}
       {showCourseSelector && (
         <div className="modal-overlay" onClick={() => setShowCourseSelector(false)}>
           <div className="modal-content planner-modal" onClick={(e) => e.stopPropagation()}>

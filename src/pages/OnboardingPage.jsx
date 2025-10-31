@@ -105,23 +105,6 @@ const OnboardingPage = ({ onLogin }) => {
                     </button>
                 </form>
 
-                <div className="demo-credentials">
-                    <p className="demo-title">Demo Accounts:</p>
-                    <div className="demo-accounts">
-                        <div className="demo-account">
-                            <strong>💻 Computer Science (Sophomore)</strong>
-                            <span>Username: alex</span>
-                            <span>Password: 123</span>
-                            <span className="demo-note">5 courses completed • 45 credits • GPA: 3.65</span>
-                        </div>
-                        <div className="demo-account">
-                            <strong>🌊 Marine Science (Junior)</strong>
-                            <span>Username: jordan</span>
-                            <span>Password: abc</span>
-                            <span className="demo-note">9 courses completed • 72 credits • GPA: 3.82</span>
-                        </div>
-                    </div>
-                </div>
 
                 <div className="onboarding-features">
                     <div className="onboarding-feature">
